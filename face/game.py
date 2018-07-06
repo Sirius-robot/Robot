@@ -11,18 +11,12 @@ class Game:
                  height,
                  back_image_filename,
                  frame_rate):
-        #self.br = Eyebrow(100, 100, 20, 50, Color(255, 0, 0))
-        #self.br.draw(self.background_image)
-#
-        #self.eye = Eye(200, 200, 50, Color(255, 0, 0), 5)
-        #self.eye.draw(self.background_image)
-
 
         self.background_image = \
             pygame.image.load(back_image_filename)
         self.frame_rate = frame_rate
         self.game_over = False
-        self.objects = []
+
         pygame.mixer.pre_init(44100, 16, 2, 4096)
         pygame.init()
         pygame.font.init()
@@ -33,9 +27,23 @@ class Game:
         self.keyup_handlers = defaultdict(list)
         self.mouse_handlers = []
 
+        self.br = Eyebrow(100, 100, 20, 50, Color(0,100,0))
+        self.br.draw(self.background_image)
+
+        self.br2 = Eyebrow(680, 100, 20, 50, Color(0,100,0))
+        self.br2.draw(self.background_image)
+
+        self.eye = Eye(200, 200, 50, Color(0,100,0))
+        self.eye.draw(self.background_image)
+
+        self.eye2 = Eye(600,200, 50, Color(0,100,0))
+        self.eye2.draw(self.background_image)
+
+        self.objects = [self.br, self.eye, self.br2, self.eye2]
     def update(self):
         for o in self.objects:
             o.update()
+
     def draw(self):
         for o in self.objects:
             o.draw(self.surface)
@@ -48,11 +56,17 @@ class Game:
                 print('dhxfcfbd')
                 if event.key == pygame.K_LEFT:
                     print('hello')
-                # for handler in self.keydown_handlers[event.key]:
-                #     handler(event.key)
+                    self.br2.move(-10, 0)
+
                 if event.key == pygame.K_RIGHT:
                     print('huktftiyfiy')
+                    self.br.move(10, 0)
 
+                if event.key == pygame.K_UP:
+                    print('huktftiyfiy')
+
+                if event.key == pygame.K_DOWN:
+                    print('huktftiyfiy')
 
             elif event.type == pygame.KEYUP:
                 for handler in self.keyup_handlers[event.key]:
