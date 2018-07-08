@@ -1,5 +1,4 @@
 import dynamixel
-dynamixel.init(1)
-dynamixel.move(DXL_ID = input(" ID ?"), dxl_goal_position = input("How much ?"), dxl_goal_speed = input("Wich speed ?"))
-dynamixel.close(1)
-
+dynamixel.init()
+dynamixel.multiMove([1,2,3,4,5,6],[100,100,100,100,100,100],[100,100,100,100,100,100])
+#dynamixel.stop(1,2,3,4,5,6) #Eсли включить эту строку, то программа вылетает, из-за того, что во время выполнения программы, после функции "multiMove" запускается остановка приводов(эта строка), но приводы ище неуспели выполнить предидущую
