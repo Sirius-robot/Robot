@@ -4,3 +4,5 @@
 venv/
 
 face/__pycache__/
+*.wav
+*.xml
