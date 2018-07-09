@@ -3,4 +3,7 @@
 
 venv/
 
-face/__pycache__/
+*/__pycache__/
+*.wav
+*.xml
+*.idea/
