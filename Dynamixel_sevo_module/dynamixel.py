@@ -61,3 +61,7 @@ def stop(ID):
     elif dxl_error != 0:
         print("%s" % packetHandler.getRxPacketError(dxl_error))
     portHandler.closePort()
+def read(ID):
+    dxl_present_position, dxl_comm_result, dxl_error = packetHandler.read2ByteTxRx(portHandler, ID, 36)
+    return dxl_present_position
+
