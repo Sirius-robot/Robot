@@ -46,8 +46,8 @@ def multiMove(ID,pos,speed):
     for x in ID:
         param_goal_speed = [DXL_LOBYTE(speed[IDO]), DXL_HIBYTE(speed[IDO])]
         param_goal_position = [DXL_LOBYTE(pos[IDO]), DXL_HIBYTE(pos[IDO])]
-        dxl_addparam_result = groupSyncSpeed.addParam(IDQ, param_goal_speed)
-        dxl_addparam_result = groupSyncPos.addParam(IDQ, param_goal_position)
+        dxl_addparam_result = groupSyncSpeed.addParam(ID[IDO], param_goal_speed)
+        dxl_addparam_result = groupSyncPos.addParam(ID[IDO], param_goal_position)
         IDO = IDO + 1
         IDQ = IDQ + 1
     groupSyncSpeed.txPacket()
