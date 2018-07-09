@@ -1,4 +1,23 @@
 import dynamixel
-dynamixel.init()
-dynamixel.multiMove([1,2,3,4,5,6],[100,100,100,100,100,100],[100,100,100,100,100,100])
-#dynamixel.stop(1,2,3,4,5,6) #Eсли включить эту строку, то программа вылетает, из-за того, что во время выполнения программы, после функции "multiMove" запускается остановка приводов(эта строка), но приводы ище неуспели выполнить предидущую
+from time import sleep
+z=[1,2,3,4,5,6]
+for x in z:
+ dynamixel.init(x)
+dynamixel.multiMove([1],[1000],[500])
+sleep(1)
+dynamixel.multiMove([1],[100],[500])
+sleep(1)
+dynamixel.multiMove([1],[1000],[500])
+sleep(1.4)
+dynamixel.multiMove([2,3],[750,750],[1000,900])
+sleep(0.8)
+dynamixel.multiMove([2,3],[500,500],[1000,1000])
+sleep(0.8)
+dynamixel.multiMove([2,3],[250,250],[1000,1000])
+sleep(1)
+dynamixel.multiMove([2,3],[500,500],[1000,1000])
+sleep(0.8)
+dynamixel.multiMove([2,3],[750,750],[1000,1000])
+sleep(0.4)
+dynamixel.multiMove([2,3],[1000,1000],[1000,1000])
+sleep(1)

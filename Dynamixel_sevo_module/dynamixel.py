@@ -16,40 +16,28 @@ LEN_MX_GOAL_SPEED           = 2
 LEN_MX_GOAL_POSITION        = 2
 LEN_MX_PRESENT_POSITION     = 4
 PROTOCOL_VERSION            = 1.0
-DXL1_ID                     = 1
-DXL2_ID                     = 2
 BAUDRATE                    = 1000000
 DEVICENAME                  = 'COM4'
 TORQUE_ENABLE               = 1
 TORQUE_DISABLE              = 0
 DXL_MINIMUM_POSITION_VALUE  = 0
 DXL_MAXIMUM_POSITION_VALUE  = 1023
-DXL_MOVING_STATUS_THRESHOLD = 50
-index = 0
 
 portHandler = PortHandler(DEVICENAME)
 packetHandler = PacketHandler(PROTOCOL_VERSION)
 
-def init():
+def init(ID):
  if portHandler.openPort():
     print("Succeeded to open the port")
  if portHandler.setBaudRate(BAUDRATE):
     print("Succeeded to change the baudrate")
- dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, DXL1_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE)
+ dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE)
  if dxl_comm_result != COMM_SUCCESS:
     print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
  elif dxl_error != 0:
     print("%s" % packetHandler.getRxPacketError(dxl_error))
  else:
-    print("Dynamixel#%d has been successfully connected" % DXL1_ID)
- dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, DXL2_ID, ADDR_MX_TORQUE_ENABLE, TORQUE_ENABLE)
- if dxl_comm_result != COMM_SUCCESS:
-    print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
- elif dxl_error != 0:
-    print("%s" % packetHandler.getRxPacketError(dxl_error))
- else:
-    print("Dynamixel#%d has been successfully connected" % DXL2_ID)
-
+    print("Dynamixel#%d has been successfully connected" % ID)
 def multiMove(ID,pos,speed):
     groupSyncPos = GroupSyncWrite(portHandler, packetHandler, ADDR_MX_GOAL_POSITION, LEN_MX_GOAL_POSITION)
     groupSyncSpeed = GroupSyncWrite(portHandler, packetHandler,ADDR_MX_GOAL_SPEED, LEN_MX_GOAL_SPEED)
@@ -66,15 +54,8 @@ def multiMove(ID,pos,speed):
     groupSyncPos.txPacket()
     dxl_comm_result = groupSyncSpeed.txPacket()
     dxl_comm_result = groupSyncPos.txPacket()
-
-def stop(ID1,ID2,ID3,ID4,ID5,ID6):
-    print('HI')
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID1, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID2, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID3, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID4, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID5, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
-    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID6, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
+def stop(ID):
+    dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
     if dxl_comm_result != COMM_SUCCESS:
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
     elif dxl_error != 0:
