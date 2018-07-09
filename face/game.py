@@ -27,10 +27,10 @@ class Game:
         self.keyup_handlers = defaultdict(list)
         self.mouse_handlers = []
 
-        self.br = Eyebrow(100, 100, 20, 50, Color(0,100,0))
+        self.br = Eyebrow(100, 100, 100, 20, Color(0,100,0))
         self.br.draw(self.background_image)
 
-        self.br2 = Eyebrow(680, 100, 20, 50, Color(0,100,0))
+        self.br2 = Eyebrow(700, 100, -100, 20, Color(0,100,0))
         self.br2.draw(self.background_image)
 
         self.eye = Eye(200, 200, 50, Color(0,100,0))
@@ -47,30 +47,36 @@ class Game:
     def draw(self):
         for o in self.objects:
             o.draw(self.surface)
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                print('dhxfcfbd')
                 if event.key == pygame.K_LEFT:
-                    print('hello')
-                    self.br2.move(-10, 0)
+                    self.br2.move(0, -10)
 
                 if event.key == pygame.K_RIGHT:
-                    print('huktftiyfiy')
-                    self.br.move(10, 0)
+                    self.br.move(0, 10)
+                    self.br2.move(0, 10)
 
                 if event.key == pygame.K_UP:
-                    print('huktftiyfiy')
+                    self.br.move(0, -10)
+                    self.br2.move(0, -10)
 
                 if event.key == pygame.K_DOWN:
-                    print('huktftiyfiy')
+                    self.br.move(0, 10)
+                    self.br2.move(0, 10)
+
+                if event.key == pygame.K_v:
+                    self.br.pygame.transform.rotate(10)
+                    #vself.br.transform.rotate(10)
 
             elif event.type == pygame.KEYUP:
                 for handler in self.keyup_handlers[event.key]:
                     handler(event.key)
+
             elif event.type in (pygame.MOUSEBUTTONDOWN,
                                 pygame.MOUSEBUTTONUP,
                                 pygame.MOUSEMOTION):
@@ -78,9 +84,9 @@ class Game:
                     handler(event.type, event.pos)
     def run(self):
         while not self.game_over:
-            self.surface.blit(self.background_image, (0, 0))
+            self.surface.blit(self.background_image, (50, 50))
             self.handle_events()
-            self.update()
+            #self.update()
             self.draw()
             pygame.display.update()
             self.clock.tick(self.frame_rate)
