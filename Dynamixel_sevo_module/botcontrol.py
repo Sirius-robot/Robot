@@ -43,4 +43,3 @@ def robotControl(ID,Time,Dego):
         e=e+2
         r=r+2
         t=t+2
-robotControl((1,2,3,4,5,6),(32,16,8,4,10,10),(300,300,300,300,300,300))
