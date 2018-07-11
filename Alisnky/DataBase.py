@@ -85,6 +85,79 @@ class database:
 		answer = cursor.fetchall()
 		return answer
 
+	def gesture(self, title):
+		answer = self.get_gesture(title)
+		count_tp = 0
+		temp = -1
+		motors = []
+		tp = []
+		indices = []
+		angles = []
+		# m1 = []
+		# m2 = []
+		# m3 = []
+		# m4 = []
+		# m5 = []
+		# m6 = []
+		for i in range(len(answer)):
+			if temp != answer[i][4]:
+				count_tp += 1
+				temp = answer[i][4]
+				motors.append(1)
+				tp.append(answer[i][4])
+			else:
+				motors[count_tp - 1] += 1
+		data = [[0, 0] for data in range(count_tp)]
+		for i in range(count_tp):
+			temp = []
+			for j in range(motors[i]):
+				temp.append([0, 0, 0])
+			data[i][1] = temp
+		print('structure of data', data)
+
+		temp = 0
+		for i in range(count_tp):
+			data[i][0] = tp[i]
+			for j in range(motors[i]):
+				data[i][1][j][0] = self.convert(answer[temp][1])
+				data[i][1][j][1] = answer[temp][3]
+				temp += 1
+
+		return data
+
+	def convert(self, db_motor_id):
+		sql = "SELECT * FROM conversion WHERE DB = ?"
+		cursor.execute(sql, [(db_motor_id)])
+		return cursor.fetchone()[2]
+
+	def get_conversion_info(self, db_motor_id):
+		sql = "SELECT * FROM conversion WHERE DB = ?"
+		cursor.execute(sql, [(db_motor_id)])
+		return cursor.fetchone()
+
+
+
 conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
 database = database()
+
+gesname = 'smail'
+
+database.write_gesture(gesname)
+database.write_motion(1, database.get_gesture_id(gesname), 180, 40)
+database.write_motion(2, database.get_gesture_id(gesname), 180, 100)
+database.write_motion(3, database.get_gesture_id(gesname), 90, 40)
+database.write_motion(1, database.get_gesture_id(gesname), 32, 80)
+
+print(database.get_gesture(gesname))
+
+print('final data', database.gesture(gesname))
+
+database.del_gesture(TITLE, gesname)
+
+print('First test is OK!\n')
+
+print('info of conversion', database.get_conversion_info(5))
+print('convert', database.convert(1))
+
+print('Second test is OK')
