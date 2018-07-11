@@ -24,21 +24,35 @@ clock = pygame.time.Clock()
 background_position = [0, 0]
 
 # Load and set up graphics.
-background_image = pygame.image.load("background.png").convert()
-eye_image = pygame.image.load("eye.png").convert()
-eye2_image = pygame.image.load("eye.png").convert()
-eye3_image = pygame.image.load("eye.png").convert()
-smile_image = pygame.image.load("smile.png").convert()
-smile2_image = pygame.image.load("smile.png").convert()
-eye_image.set_colorkey(BLACK)
-eye2_image.set_colorkey(BLACK)
-eye3_image.set_colorkey(BLACK)
-smile_image.set_colorkey(BLACK)
-smile2_image.set_colorkey(BLACK)
+background = pygame.image.load("background.png").convert()
+background_image = pygame.image.load("eye_socket.png").convert()
+
+pupil = pygame.image.load("pupil.png").convert()
+pupil2 = pygame.image.load("pupil.png").convert()
+pupil_anger = pygame.image.load("pupil_anger.png").convert()
+eyebrows = pygame.image.load("eyebrows.png").convert()
+eyebrows2 = pygame.image.load("eyebrows.png").convert()
+eyebrows_anger = pygame.image.load("eyebrows_anger.png").convert()
+eyebrows_embarrassment = pygame.image.load("eyebrows_embarrassment.png").convert()
+mouth = pygame.image.load("mouth.png").convert()
+mouth2 = pygame.image.load("mouth.png").convert()
+mouth_anger = pygame.image.load("mouth_anger.png").convert()
+
+background.set_colorkey(BLACK)
+
+pupil.set_colorkey(WHITE)
+pupil2.set_colorkey(WHITE)
+pupil_anger.set_colorkey(WHITE)
+eyebrows.set_colorkey(WHITE)
+eyebrows2.set_colorkey(WHITE)
+eyebrows_anger.set_colorkey(WHITE)
+eyebrows_embarrassment.set_colorkey(WHITE)
+mouth.set_colorkey(WHITE)
+mouth2.set_colorkey(WHITE)
+mouth_anger.set_colorkey(WHITE)
+
 
 done = False
-
-wink = True
 
 while not done:
     for event in pygame.event.get():
@@ -46,28 +60,32 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN:
+            if  event.key == pygame.K_q:
+                eyebrows = pygame.transform.rotate(eyebrows2,0)
+            if  event.key == pygame.K_w:
+                eyebrows = pygame.transform.rotate(eyebrows_anger,0)
+            if  event.key == pygame.K_e:
+                eyebrows = pygame.transform.rotate(eyebrows_embarrassment,0)
+            if  event.key == pygame.K_a:
+                pupil = pygame.transform.rotate(pupil2,0)
             if  event.key == pygame.K_s:
-                smile_image = pygame.transform.flip(smile_image,300,300)
-            if  (event.key == pygame.K_w)and(wink == True):
-                eye_image = pygame.transform.flip(smile2_image,100,100)
-                eye2_image = pygame.transform.flip(smile2_image,100,100)
-                wink = False
-            else:
-                eye_image = pygame.transform.flip(eye3_image, 100, 100)
-                eye2_image = pygame.transform.flip(eye3_image, 100, 100)
-                wink = True
+                pupil = pygame.transform.rotate(pupil_anger,0)
+            if  event.key == pygame.K_z:
+                mouth = pygame.transform.rotate(mouth2,0)
+            if  event.key == pygame.K_x:
+                mouth = pygame.transform.rotate(mouth_anger,0)
 
-    # Copy image to screen:
     screen.blit(background_image, background_position)
 
-    # Get the current mouse position. This returns the position
-    # as a list of two numbers.
+    screen.blit(background, [0, 0])
+
+    screen.blit(eyebrows, [0, 0])
+
+    screen.blit(pupil, [0, 0])
+
+    screen.blit(mouth, [0, 0])
 
 
-    # Copy image to screen:
-    screen.blit(eye_image, [100, 100])
-    screen.blit(eye2_image, [500, 100])
-    screen.blit(smile_image, [300, 300])
 
 
     pygame.display.flip()
