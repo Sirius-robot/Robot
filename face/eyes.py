@@ -2,7 +2,7 @@ import pygame
 from game_object import GameObject
 
 class Eye(GameObject):
-    def __init__(self, x, y, r, color, speed):
+    def __init__(self, x, y, r, color, speed=(0,0)):
         GameObject.__init__(self,
                             x - r,
                             y - r,
