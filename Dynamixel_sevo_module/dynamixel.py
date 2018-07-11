@@ -77,4 +77,3 @@ def read(ID):
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
          raise Exception("Something went wrong")
     return dxl_present_position
-

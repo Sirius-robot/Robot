@@ -1,3 +1,12 @@
 import botcontrol
-botcontrol.robotControl((1,2,3,4,5,6),(32,16,8,4,10,10),(300,300,100,100,100,100))
-#BotControl.robotControl((1,2,3,4,5,6),(32,16,8,4,10,10),(100,100,100,100,100,100))
+
+botcontrol.multiInt()
+botcontrol.robotControl((1,2,3,4),(1023,6000,10000,20000),(30,300,300,300))
+'''
+import threading
+
+def timer():
+    threading.Timer(0.04,timer).start()
+    print("Hi")
+timer()
+'''
