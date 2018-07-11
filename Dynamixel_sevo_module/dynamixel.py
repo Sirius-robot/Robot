@@ -17,7 +17,7 @@ LEN_MX_GOAL_POSITION        = 2
 LEN_MX_PRESENT_POSITION     = 4
 PROTOCOL_VERSION            = 1.0
 BAUDRATE                    = 1000000
-DEVICENAME                  = 'COM4'
+DEVICENAME                  = '/dev/ttyUSB0'
 TORQUE_ENABLE               = 1
 TORQUE_DISABLE              = 0
 DXL_MINIMUM_POSITION_VALUE  = 0
@@ -27,7 +27,6 @@ portHandler = PortHandler(DEVICENAME)
 packetHandler = PacketHandler(PROTOCOL_VERSION)
 
 def init(ID):
-
     if portHandler.openPort():
        print("Succeeded to open the port")
     if portHandler.setBaudRate(BAUDRATE):

@@ -57,3 +57,4 @@ def robotControl(ID, TimeR, Dego):#ID: write id of servo; Time: write move time(
         q=q+1
         w=w+1
     dynamixel.multiMove(ID,dgd,dgs)
+
