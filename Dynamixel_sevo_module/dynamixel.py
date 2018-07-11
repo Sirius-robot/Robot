@@ -38,6 +38,7 @@ def init(ID):
     print("%s" % packetHandler.getRxPacketError(dxl_error))
  else:
     print("Dynamixel#%d has been successfully connected" % ID)
+
 def multiMove(ID,pos,speed):
     groupSyncPos = GroupSyncWrite(portHandler, packetHandler, ADDR_MX_GOAL_POSITION, LEN_MX_GOAL_POSITION)
     groupSyncSpeed = GroupSyncWrite(portHandler, packetHandler,ADDR_MX_GOAL_SPEED, LEN_MX_GOAL_SPEED)
@@ -54,6 +55,7 @@ def multiMove(ID,pos,speed):
     groupSyncPos.txPacket()
     dxl_comm_result = groupSyncSpeed.txPacket()
     dxl_comm_result = groupSyncPos.txPacket()
+
 def stop(ID):
     dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
     if dxl_comm_result != COMM_SUCCESS:
@@ -61,6 +63,7 @@ def stop(ID):
     elif dxl_error != 0:
         print("%s" % packetHandler.getRxPacketError(dxl_error))
     portHandler.closePort()
+    
 def read(ID):
     dxl_present_position, dxl_comm_result, dxl_error = packetHandler.read2ByteTxRx(portHandler, ID, 36)
     return dxl_present_position
