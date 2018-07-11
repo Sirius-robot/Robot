@@ -1,21 +1,23 @@
 import pygame
-import win32api,win32gui
+import win32gui, win32api,win32con
+
 monitors = win32api.EnumDisplayMonitors()
-print(win32api.GetMonitorInfo(monitors[0][0]))
-print(win32api.GetMonitorInfo(monitors[1][0]))
 
 # Define some colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 # Call this function so the Pygame library can initialize itself
 pygame.init()
-#pygame.display.toggle_fullscreen( )
+
 screen = pygame.display.set_mode([800, 480],pygame.NOFRAME)
+
+hmdn = win32gui.GetForegroundWindow()
+win32gui.ShowWindow(hmdn, win32con.SHOW_FULLSCREEN)
 print(pygame.display.Info())
+win32gui.MoveWindow(hmdn, win32api.GetMonitorInfo(monitors[1][0])['Monitor'][0],
+                    win32api.GetMonitorInfo(monitors[1][0])['Monitor'][1],800,480,0)
 
 clock = pygame.time.Clock()
-
-# Before the loop, load the sounds:
 
 # Set positions of graphics
 background_position = [0, 0]
