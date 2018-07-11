@@ -27,6 +27,7 @@ portHandler = PortHandler(DEVICENAME)
 packetHandler = PacketHandler(PROTOCOL_VERSION)
 
 def init(ID):
+
     if portHandler.openPort():
        print("Succeeded to open the port")
     if portHandler.setBaudRate(BAUDRATE):
@@ -59,7 +60,7 @@ def multiMove(ID,pos,speed):
     dxl_comm_result = groupSyncPos.txPacket()
     if dxl_comm_result != COMM_SUCCESS:
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
-         raise Exception("Something went wrong")
+         raise Exception("Something went wrong"
 
 def stop(ID):
     dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
