@@ -8,5 +8,6 @@ def behaviourService(behaviour_service,tag,text):
 "tag-key for search necessary array in dictionary; text- speech for robot(result of work chatbot)"
     file=open(random.choice(behaviour_service[tag]),'r').read()
     x=file.replace("<speech>","<speech>"+text)
+"x- str with finish commands for robot(speech,gesture)"
     return(x)
 "behaviourService(behaviour_service,tag,text)"
