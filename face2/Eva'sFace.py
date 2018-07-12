@@ -1,6 +1,7 @@
 #Hi
 import pygame
 import win32gui, win32api,win32con
+import time
 
 monitors = win32api.EnumDisplayMonitors()
 
@@ -39,7 +40,7 @@ mouth_anger = pygame.image.load("Images/mouths/mouth_anger.png")
 mouth_embarrassment = pygame.image.load("Images/mouths/mouth_embarrassment.png")
 mouth_boredom = pygame.image.load("Images/mouths/mouth_boredom.png")
 mouth_surprise = pygame.image.load("Images/mouths/mouth_surprise.png")
-'''
+
 pupil.set_colorkey(WHITE)
 eyebrows.set_colorkey(WHITE)
 eyebrows2.set_colorkey(WHITE)
@@ -52,14 +53,18 @@ mouth_anger.set_colorkey(WHITE)
 mouth_embarrassment.set_colorkey(WHITE)
 mouth_boredom.set_colorkey(WHITE)
 mouth_surprise.set_colorkey(WHITE)
-'''
+
 done = False
+
+x = 120
+y = 150
 
 while not done:
     for event in pygame.event.get():
-
         if event.type == pygame.QUIT:
             done = True
+
+
         if event.type == pygame.KEYDOWN:
             if  event.key == pygame.K_q:
                 eyebrows = pygame.transform.rotate(eyebrows2,0)
@@ -79,12 +84,11 @@ while not done:
                     mouth = pygame.transform.rotate(mouth_boredom, 0)
             if event.key == pygame.K_g:
                         mouth = pygame.transform.rotate(mouth_surprise, 0)
-            if event.key == pygame.K_z:
-                        pupil = pygame.transform.scale(pupil, 0, 1.5)
+
 
     screen.blit(background, [0, 0])
 
-    screen.blit(pupil, [0, 0])
+    screen.blit(pupil, [x, y])
 
     screen.blit(background_image, background_position)
 
@@ -93,7 +97,9 @@ while not done:
 
     screen.blit(mouth, [0, 0])
 
-
+    a = input()
+    b = input()
+    t = input()
 
 
     pygame.display.flip()
