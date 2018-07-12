@@ -27,26 +27,56 @@ sm.draw(surface)
 
 objects = [eyebr, sm]
 
+
+MOVE_SIDE = 1000
+MOVE_DOWN = 3500
+clock = pygame.time.Clock()
+print(type(pygame.USEREVENT))
+print(pygame.USEREVENT)
+move_side_event = pygame.USEREVENT + 1
+move_down_event = pygame.USEREVENT + 2
+reloaded_event  = pygame.USEREVENT + 3
+print(pygame.KEYDOWN)
+pygame.time.set_timer(move_side_event, MOVE_SIDE)
+pygame.time.set_timer(move_down_event, MOVE_DOWN)
+
+
+
 mainLoop = True
+#pygame.time.set_timer(eyebr.move(-10, 0), 10)
+#pygame.time.set_timer(USEREVENT, delay)
 while mainLoop:
+    #clock.tick(1)
+    #pygame.time.set_timer(eyebr.move(-10, 0), 10)
+
+
     for event in pygame.event.get():
+        if event.type == move_side_event:
+            sm.move(10, 0)
+        elif event.type == move_down_event:
+            sm.move(0, 10)
+        elif event.type == reloaded_event:
+            # when the reload timer runs out, reset it
+            reloaded = True
+            pygame.time.set_timer(reloaded_event, 0)
+
         if event.type == QUIT:
             mainLoop = False
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                eyebr.move(-10, 0)
+                sm.move(-10, 0)
 
-            elif event.key == pygame.K_RIGHT:
-                eyebr.move(10, 0)
+            if event.key == pygame.K_RIGHT:
+                sm.move(10, 0)
 
-            elif event.key == pygame.K_UP:
-                eyebr.move(0, -10)
+            if event.key == pygame.K_UP:
+                sm.move(0, -10)
 
-            elif event.key == pygame.K_DOWN:
-                eyebr.move(0, 10)
+            if event.key == pygame.K_DOWN:
+                sm.move(0, 10)
 
-            elif event.key == pygame.K_1:
+            if event.key == pygame.K_1:
                 sm.change(300, 300,100,100,'..\images\eyebrow.png' )
 
     surface.fill(bgColor)
