@@ -24,21 +24,21 @@ clock = pygame.time.Clock()
 background_position = [0, 0]
 
 # Load and set up graphics.
-background = pygame.image.load("background.png")
-background_image = pygame.image.load("eye_socket.png")
+background = pygame.image.load("Images/background.png")
+background_image = pygame.image.load("Images/eye_socket.png")
 
-pupil = pygame.image.load("pupil.png")
-eyebrows = pygame.image.load("eyebrows.png")
-eyebrows2 = pygame.image.load("eyebrows.png")
-eyebrows_anger = pygame.image.load("eyebrows_anger.png")
-eyebrows_embarrassment = pygame.image.load("eyebrows_embarrassment.png")
-eyebrows_surprise = pygame.image.load("eyebrows_surprise.png")
-mouth = pygame.image.load("mouth.png")
-mouth2 = pygame.image.load("mouth.png")
-mouth_anger = pygame.image.load("mouth_anger.png")
-mouth_embarrassment = pygame.image.load("mouth_embarrassment.png")
-mouth_boredom = pygame.image.load("mouth_boredom.png")
-mouth_surprise = pygame.image.load("mouth_surprise.png")
+pupil = pygame.image.load("Images/pupil.png")
+eyebrows = pygame.image.load("Images/eyebrows/eyebrows.png")
+eyebrows2 = pygame.image.load("Images/eyebrows/eyebrows.png")
+eyebrows_anger = pygame.image.load("Images/eyebrows/eyebrows_anger.png")
+eyebrows_embarrassment = pygame.image.load("Images/eyebrows/eyebrows_embarrassment.png")
+eyebrows_surprise = pygame.image.load("Images/eyebrows/eyebrows_surprise.png")
+mouth = pygame.image.load("Images/mouths/mouth.png")
+mouth2 = pygame.image.load("Images/mouths/mouth.png")
+mouth_anger = pygame.image.load("Images/mouths/mouth_anger.png")
+mouth_embarrassment = pygame.image.load("Images/mouths/mouth_embarrassment.png")
+mouth_boredom = pygame.image.load("Images/mouths/mouth_boredom.png")
+mouth_surprise = pygame.image.load("Images/mouths/mouth_surprise.png")
 '''
 pupil.set_colorkey(WHITE)
 eyebrows.set_colorkey(WHITE)
@@ -79,6 +79,8 @@ while not done:
                     mouth = pygame.transform.rotate(mouth_boredom, 0)
             if event.key == pygame.K_g:
                         mouth = pygame.transform.rotate(mouth_surprise, 0)
+            if event.key == pygame.K_z:
+                        pupil = pygame.transform.scale(pupil, 0, 1.5)
 
     screen.blit(background, [0, 0])
 
