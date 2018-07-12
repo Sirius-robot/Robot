@@ -24,36 +24,35 @@ clock = pygame.time.Clock()
 background_position = [0, 0]
 
 # Load and set up graphics.
-background = pygame.image.load("background.png").convert()
-background_image = pygame.image.load("eye_socket.png").convert()
+background = pygame.image.load("background.png")
+background_image = pygame.image.load("eye_socket.png")
 
-pupil = pygame.image.load("pupil.png").convert()
-pupil2 = pygame.image.load("pupil.png").convert()
-pupil_anger = pygame.image.load("pupil_anger.png").convert()
-eyebrows = pygame.image.load("eyebrows.png").convert()
-eyebrows2 = pygame.image.load("eyebrows.png").convert()
-eyebrows_anger = pygame.image.load("eyebrows_anger.png").convert()
-eyebrows_embarrassment = pygame.image.load("eyebrows_embarrassment.png").convert()
-mouth = pygame.image.load("mouth.png").convert()
-mouth2 = pygame.image.load("mouth.png").convert()
-mouth_anger = pygame.image.load("mouth_anger.png").convert()
-
-background.set_colorkey(BLACK)
-background_image.set_colorkey(BLACK)
-
-
+pupil = pygame.image.load("pupil.png")
+eyebrows = pygame.image.load("eyebrows.png")
+eyebrows2 = pygame.image.load("eyebrows.png")
+eyebrows_anger = pygame.image.load("eyebrows_anger.png")
+eyebrows_embarrassment = pygame.image.load("eyebrows_embarrassment.png")
+eyebrows_surprise = pygame.image.load("eyebrows_surprise.png")
+mouth = pygame.image.load("mouth.png")
+mouth2 = pygame.image.load("mouth.png")
+mouth_anger = pygame.image.load("mouth_anger.png")
+mouth_embarrassment = pygame.image.load("mouth_embarrassment.png")
+mouth_boredom = pygame.image.load("mouth_boredom.png")
+mouth_surprise = pygame.image.load("mouth_surprise.png")
+'''
 pupil.set_colorkey(WHITE)
-pupil2.set_colorkey(WHITE)
-pupil_anger.set_colorkey(WHITE)
 eyebrows.set_colorkey(WHITE)
 eyebrows2.set_colorkey(WHITE)
 eyebrows_anger.set_colorkey(WHITE)
+eyebrows_surprise.set_colorkey(WHITE)
 eyebrows_embarrassment.set_colorkey(WHITE)
 mouth.set_colorkey(WHITE)
 mouth2.set_colorkey(WHITE)
 mouth_anger.set_colorkey(WHITE)
-
-
+mouth_embarrassment.set_colorkey(WHITE)
+mouth_boredom.set_colorkey(WHITE)
+mouth_surprise.set_colorkey(WHITE)
+'''
 done = False
 
 while not done:
@@ -68,14 +67,19 @@ while not done:
                 eyebrows = pygame.transform.rotate(eyebrows_anger,0)
             if  event.key == pygame.K_e:
                 eyebrows = pygame.transform.rotate(eyebrows_embarrassment,0)
+            if  event.key == pygame.K_r:
+                eyebrows = pygame.transform.rotate(eyebrows_surprise,0)
             if  event.key == pygame.K_a:
-                pupil = pygame.transform.rotate(pupil2,0)
-            if  event.key == pygame.K_s:
-                pupil = pygame.transform.rotate(pupil_anger,0)
-            if  event.key == pygame.K_z:
                 mouth = pygame.transform.rotate(mouth2,0)
-            if  event.key == pygame.K_x:
+            if  event.key == pygame.K_s:
                 mouth = pygame.transform.rotate(mouth_anger,0)
+            if  event.key == pygame.K_d:
+                mouth = pygame.transform.rotate(mouth_embarrassment,0)
+            if event.key == pygame.K_f:
+                    mouth = pygame.transform.rotate(mouth_boredom, 0)
+            if event.key == pygame.K_g:
+                        mouth = pygame.transform.rotate(mouth_surprise, 0)
+
     screen.blit(background, [0, 0])
 
     screen.blit(pupil, [0, 0])
