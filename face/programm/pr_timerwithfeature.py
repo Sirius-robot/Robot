@@ -21,29 +21,29 @@ win32gui.MoveWindow(hwnd, win32api.GetMonitorInfo(monitors[1][0])['Monitor'][0],
 bgColor = (0,255,0)
 
 # Load and set up graphics.
-background = pygame.image.load("../images/background.png")
-background_image = pygame.image.load("../images/eye_socket.png")
+background = Feature(0,0,800,480,"../images/background.png")
+eye_socket = Feature(0,0,800,480,"../images/eye_socket.png")
 
-pupil = pygame.image.load("../images/pupil.png")
-eyebrows = pygame.image.load("../images/eyebrows.png")
-eyebrows2 = pygame.image.load("../images/eyebrows.png")
-eyebrows_anger = pygame.image.load("../images/eyebrows_anger.png")
-eyebrows_embarrassment = pygame.image.load("../images/eyebrows_embarrassment.png")
-eyebrows_surprise = pygame.image.load("../images/eyebrows/eyebrows_surprise.png")
-mouth = pygame.image.load("../images/mouths/mouth.png")
-mouth2 = pygame.image.load("../images/mouths/mouth.png")
-mouth_anger = pygame.image.load("../images/mouths/mouth_anger.png")
-mouth_embarrassment = pygame.image.load("../images/mouths/mouth_embarrassment.png")
-mouth_boredom = pygame.image.load("../images/mouths/mouth_boredom.png")
-mouth_surprise = pygame.image.load("../images/mouths/mouth_surprise.png")
+pupil1 = Feature(95,110,116,117,"../images/onepupil.png")
+pupil2 = Feature(600,110,116,117,"../images/onepupil.png")
+
+eyebrows = Feature(0,0,800,480,"../images/eyebrows.png")
+eyebrows_anger = Feature(0,0,800,480,"../images/eyebrows_anger.png")
+eyebrows_embarrassment = Feature(0,0,800,480,"../images/eyebrows_embarrassment.png")
+eyebrows_surprise = Feature(0,0,800,480,"../images/eyebrows/eyebrows_surprise.png")
+mouth = Feature(0,0,800,480,"../images/mouths/mouth.png")
+mouth2 = Feature(0,0,800,480,"../images/mouths/mouth.png")
+mouth_anger = Feature(0,0,800,480,"../images/mouths/mouth_anger.png")
+mouth_embarrassment = Feature(0,0,800,480,"../images/mouths/mouth_embarrassment.png")
+mouth_boredom = Feature(0,0,800,480,"../images/mouths/mouth_boredom.png")
+mouth_surprise = Feature(0,0,800,480,"../images/mouths/mouth_surprise.png")
 
 
-eyebr = Feature(x, y, w, h, '../images/eyebrows/eyebrows.png')
-eyebr.draw(surface)
 sm = Feature(x1, y1, w1, h1, '../images/eyebrows/eyebrows.png')
-sm.draw(surface)
+#sm.draw(surface)
 
-objects = [background, pupil, background_image, eyebrows, mouth, eyebr, sm]
+
+
 
 MOVE_SIDE = 1000
 MOVE_DOWN = 3500
@@ -91,7 +91,7 @@ while mainLoop:
                 sm.change(300, 300,100,100,'../images/eyebrow.png' )
 
             elif  event.key == pygame.K_q:
-                eyebrows = pygame.transform.rotate(eyebrows2,0)
+                eyebrows = Feature(0,0,800,480,"../images/eyebrows_anger.png")#eyebrows_anger
             elif  event.key == pygame.K_w:
                 eyebrows = pygame.transform.rotate(eyebrows_anger,0)
             elif  event.key == pygame.K_e:
@@ -110,6 +110,9 @@ while mainLoop:
                 mouth = pygame.transform.rotate(mouth_surprise, 0)
 
     surface.fill(bgColor)
+
+    objects = [background, pupil1, pupil2, eye_socket, eyebrows, mouth, sm]
+
     for i in objects:
         i.draw(surface)
 
