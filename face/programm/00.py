@@ -7,7 +7,7 @@ from game_object import GameObject
 from eyebrows import Eyebrow
 from eyes import Eye
 
-s = Game(800, 600, 'background.jpeg', 60)
+s = Game(800, 600, 'background.jpg', 60)
 
 br = Eyebrow(150,150,-20,-50, Color(255,0,0))
 br.draw(s.background_image)
