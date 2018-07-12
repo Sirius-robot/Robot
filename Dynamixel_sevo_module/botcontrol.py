@@ -7,7 +7,7 @@ def multiInt(ID):
     '''
 
     for x in ID:
-        dynamixel.init(ID[x])
+        dynamixel.init(x)
 
 def robotControl(ID, TimeR, Dego):
     '''
