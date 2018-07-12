@@ -1,4 +1,5 @@
 import os
+import configparser
 from dynamixel_sdk import *
 if os.name == 'nt':
     import msvcrt
@@ -7,7 +8,8 @@ else:
 
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
-
+config = configparser.ConfigParser()
+config.read("../settings.ini")
 ADDR_MX_GOAL_SPEED          = 32
 ADDR_MX_TORQUE_ENABLE       = 24
 ADDR_MX_GOAL_POSITION       = 30
@@ -17,7 +19,7 @@ LEN_MX_GOAL_POSITION        = 2
 LEN_MX_PRESENT_POSITION     = 4
 PROTOCOL_VERSION            = 1.0
 BAUDRATE                    = 1000000
-DEVICENAME                  = '/dev/ttyUSB0'
+DEVICENAME                  = config.get("Settings", "COM")
 TORQUE_ENABLE               = 1
 TORQUE_DISABLE              = 0
 DXL_MINIMUM_POSITION_VALUE  = 0
