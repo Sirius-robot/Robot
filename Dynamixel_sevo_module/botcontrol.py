@@ -1,18 +1,21 @@
 import dynamixel
 
-def multiInt():
-    z=[1,2,3,4,5,6]
-    for x in z:
-        dynamixel.init(x)
+def multiInt(ID):
+    '''
+    :param ID: input: ID massive
+    :return:   initialization dynamixel
+    '''
 
-def robotControl(ID, TimeR, Dego):#ID: write id of servo; Time: write move time(ms);Dego: write servo move degress
+    for x in ID:
+        dynamixel.init(ID[x])
+
+def robotControl(ID, TimeR, Dego):
     '''
     this function make syncmove with servo's
-    :param ID:   input: ID massive
+    :param ID:    input: ID massive
     :param TimeR: input: Time massive, in ms
-    :param Dego: input: Degress
-    Output: servo move
-    :return:
+    :param Dego:  input: Degrees
+    :return:servo move
     '''
     n=0
     Time = []
@@ -57,4 +60,3 @@ def robotControl(ID, TimeR, Dego):#ID: write id of servo; Time: write move time(
         q=q+1
         w=w+1
     dynamixel.multiMove(ID,dgd,dgs)
-
