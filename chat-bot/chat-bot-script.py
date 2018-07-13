@@ -1,7 +1,7 @@
 from Modules import Intents
 import os
-import sys
 import dialogflow
+# import sys
 
 REACTIONS_MAPPING = {
     "аргументация":"argumentation",
@@ -53,9 +53,12 @@ def chat_bot(input_text):
         Gets input text, returns text answer and tag.'''
 
     output = (Intents.detect_intent_texts(project_id, session_id, input_text, language_code))
-    tag = REACTIONS_MAPPING[output[output.find('<')+1:output.find('>')]]
+    try:
+        tag = REACTIONS_MAPPING[output[output.find('<')+1:output.find('>')].lower()]
+    except:
+        tag = 'inactivity'
     text = output[:output.find('<')]
     
     return text, tag
 
-print(chat_bot(sys.argv[1]))
+# print(chat_bot(sys.argv[1]))
