@@ -276,41 +276,4 @@ cursor = conn.cursor()
 database = database()
 
 ################################################################################
-# конец библиотеки и начало программы тестов 
-# если сильно хочется, то можно это стереть ;)
-
-
-
-gesname = 'smail'
-
-# записываем в БД новый жест и 4 движения для него
-database.write_gesture(gesname)
-database.write_motion(1, database.get_gesture_id(gesname), 180, 40)
-database.write_motion(2, database.get_gesture_id(gesname), 180, 100)
-database.write_motion(3, database.get_gesture_id(gesname), 90, 20)
-database.write_motion(3, database.get_gesture_id(gesname), 45, 40)
-database.write_motion(1, database.get_gesture_id(gesname), 32, 100)
-database.write_motion(6, database.get_gesture_id(gesname), 125, 69)
-
-# выводим записанную информацию для проверки
-print('start data =', database.get_gesture(gesname))
-
-# выводим данные по жесту в необходимом нам формате
-print('\nfinal data =', database.gesture(gesname))
-
-# удоляем жест и привязанные к нему движения 
-database.del_gesture(TITLE, gesname)
-
-print('First test is OK!\n')
-
-# проверяем конвертацию id моторов
-print('info of conversion', database.get_conversion_info(3))
-print('convert', database.convert(1))
-
-print('Second test is OK!\n')
-
-# проверяем перезапись таблицы конвертации
-database.new_conversion_table()
-print('info of new conversion', database.get_conversion_info(3))
-
-print('Third test is OK!\n')
+# конец библиотеки
