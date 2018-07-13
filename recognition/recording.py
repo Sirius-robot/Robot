@@ -7,10 +7,9 @@ from array import array
 from lxml import etree
 import requests
 
-
+def writetofile(frames, countfile):
 	
-def zapisvfail():
-	wavfile=wave.open(FILE_NAME,'wb')
+	wavfile=wave.open('recording'+str(countfile)+'.wav','wb')
 	wavfile.setnchannels(CHANNELS)
 	wavfile.setsampwidth(audio.get_sample_size(FORMAT))
 	wavfile.setframerate(RATE)
@@ -22,7 +21,7 @@ CHANNELS=2
 RATE=44100
 CHUNK=1024
 RECORD_SECONDS=15
-FILE_NAME="RECORDING.wav"
+
 
 
 audio=pyaudio.PyAudio() 
@@ -34,16 +33,50 @@ stream=audio.open(format=FORMAT,channels=CHANNELS,
 #начало записи 
 frames=[]
 #пока уровень шума меньше 500 запись не ведется, если больше, то начинается запись в файл
-for i in range(0,int(RATE/CHUNK*RECORD_SECONDS)):
-    data=stream.read(CHUNK)
-    data_chunk=array('h',data)
-    vol=max(data_chunk)
-    if(vol>=500):
-        frames.append(data)
-
+n=0
+record=False
+countfile = 0
+while True:
+	if record is True:
+		data=stream.read(CHUNK)
+		data_chunk=array('h',data)
+		vol=max(data_chunk)
+		frames.append(data)
+		if (vol>=390):
+			n=0
+		else:
+			n=n+1
+			if n>7:
+				countfile += 1
+				zapisvfail(frames, countfile)
+				record = False
+	else: 
+		data=stream.read(CHUNK)
+		data_chunk=array('h',data)
+		vol=max(data_chunk)
+		if(vol>=500):
+			frames=[]
+			record = True
+			frames.append(data)
+			n=0
+		
 stream.stop_stream()
 stream.close()
 audio.terminate()
-zapisvfail()
-
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
