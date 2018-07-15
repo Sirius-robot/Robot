@@ -18,11 +18,11 @@ def robotControl(ID, TimeR, Dego):
     '''
     Time = []
     for x in TimeR:
-        Time.append(int(x/1000))
+        Time.append(x)
     pos=[]
     for x in ID:
         rpos = dynamixel.read(x)
-        pos.append(int(rpos/1023*300))
+        pos.append(rpos/1023*300)
     Deg=[]
     for x in range(len(ID)):
         Deg.append(abs(Dego[x]-pos[x]))
@@ -33,7 +33,7 @@ def robotControl(ID, TimeR, Dego):
         dgp=Deg[q]
         dgt=Time[q]
         dgts = Dego[q]
-        dgs.append(int((dgp*1023/300)/(dgt*2)))
+        dgs.append(int((dgp*1023/300)/(dgt*0.002)))
         dgd.append(int(dgts*1023/300))
         if dgd[q] > 1023: dgd[q] = 1023
         if dgs[q] > 1023: dgs[q] = 1023
