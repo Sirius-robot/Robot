@@ -13,7 +13,7 @@ cursor.execute("""CREATE TABLE gestures
 cursor.execute("""CREATE TABLE motions
                   (motion_id INTEGER PRIMARY KEY AUTOINCREMENT,
                   motor_id INTEGER, gesture_id INTEGER,
-                  angel INTEGER, timepoint INTEGER)
+                  angel REAL, timepoint INTEGER)
                """)
 
 
@@ -24,9 +24,12 @@ cursor.execute("""CREATE TABLE conversion
                """)
 
 # данные для конвертации
-mas = [(1, 1, 'left hand', 'X'), 	(2, 2, 'left hand', 'Y'),
-       (3, 3, 'right hand', 'X'), 	(4, 4, 'right hand', 'Y'),
-       (5, 5, 'had', 'X'), 			(6, 6, 'had', 'Z')]
+mas =  [(1, 1, 'arm_l_rotation_euler_X', 'X'), 
+        (2, 2, 'arm_l_rotation_euler_Y', 'Y'),
+        (3, 3, 'arm_r_rotation_euler_X', 'X'), 
+        (4, 4, 'arm_r_rotation_euler_Y', 'Y'),
+        (5, 5, 'head_rotation_euler_X', 'X'), 
+        (6, 6, 'head_rotation_euler_Z', 'Z')]
 cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
 
 
