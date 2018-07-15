@@ -1,4 +1,4 @@
-from Modules import Intents
+
 import os
 import dialogflow
 # import sys
@@ -52,7 +52,7 @@ def chat_bot(input_text):
     '''Получает от пользователя текст, возвращает ответ и тег.
         Gets input text, returns text answer and tag.'''
 
-    output = (Intents.detect_intent_texts(project_id, session_id, input_text, language_code))
+    output = (detect_intent_texts(project_id, session_id, input_text, language_code))
     try:
         tag = REACTIONS_MAPPING[output[output.find('<')+1:output.find('>')].lower()]
     except:

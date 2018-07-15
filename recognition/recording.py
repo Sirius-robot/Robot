@@ -6,14 +6,13 @@ import wave
 from array import array
 from lxml import etree
 import requests
+import recognition
 import msvcrt
 from msvcrt import getch
+from recognition import rec
+from recognition import parseXML
+import chatbot
 
-FORMAT=pyaudio.paInt16
-CHANNELS=2
-RATE=44100
-CHUNK=1024
-RECORD_SECONDS=15
 
 def writetofile(frames, countfile):
 	
@@ -24,63 +23,57 @@ def writetofile(frames, countfile):
 	wavfile.writeframes(b''.join(frames))#append frames recorded to file
 	wavfile.close() 
 	
-key=msvcrt.getch
+FORMAT=pyaudio.paInt16
+CHANNELS=2
+RATE=44100
+CHUNK=1024
+RECORD_SECONDS=15
 
-if key==b'\r':
-	audio=pyaudio.PyAudio() 
-	stream=audio.open(format=FORMAT,channels=CHANNELS, 
-					  rate=RATE,
-					  input=True,
-					  frames_per_buffer=CHUNK)
 
-	#начало записи 
-	frames=[]
-	#пока уровень шума меньше 500 запись не ведется, если больше, то начинается запись в файл
-	n=0
-	record=False
-	countfile = 0
-	while True:
-		if record is True:
-			print('record')
-			data=stream.read(CHUNK)
-			data_chunk=array('h',data)
-			vol=max(data_chunk)
+
+audio=pyaudio.PyAudio() 
+stream=audio.open(format=FORMAT,channels=CHANNELS, 
+                  rate=RATE,
+                  input=True,
+                  frames_per_buffer=CHUNK)
+
+#начало записи 
+frames=[]
+#пока уровень шума меньше 390 запись не ведется, если больше, то начинается запись в файл
+n=0
+record=False
+countfile = 0
+while True:
+	if record is True:
+		data=stream.read(CHUNK)
+		data_chunk=array('h',data)
+		vol=max(data_chunk)
+		frames.append(data)
+		if (vol>=500):
+			n=0
+		else:
+			n=n+1
+			if n>7:
+				countfile += 1
+				writetofile(frames, countfile)
+				record = False
+				with open('recording'+str(countfile)+'.wav','rb') as file:
+					data = file.read()
+				print(chatbot.chat_bot(rec(data)))
+	else: 
+		data=stream.read(CHUNK)
+		data_chunk=array('h',data)
+		vol=max(data_chunk)
+		if(vol>=500):
+			frames=[]
+			record = True
+			print('voice recording')
 			frames.append(data)
-			if (vol>=390):
-				n=0
-			else:
-				n=n+1
-				if n>7:
-					countfile += 1
-					writetofile(frames, countfile)
-					record = False
-		else: 
-			data=stream.read(CHUNK)
-			data_chunk=array('h',data)
-			vol=max(data_chunk)
-			if(vol>=500):
-				frames=[]
-				record = True
-				frames.append(data)
-				n=0
-			
-	stream.stop_stream()
-	stream.close()
-	audio.terminate()
-			
+			n=0
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+stream.stop_stream()
+stream.close()
+audio.terminate()
+
+
 
