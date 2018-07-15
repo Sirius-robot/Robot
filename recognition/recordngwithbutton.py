@@ -26,7 +26,7 @@ def writetofile(frames, countfile):
 	
 key=msvcrt.getch
 
-if key==b'\r':
+if key==b'\r': #нужно нажать enter
 	audio=pyaudio.PyAudio() 
 	stream=audio.open(format=FORMAT,channels=CHANNELS, 
 					  rate=RATE,
@@ -67,20 +67,3 @@ if key==b'\r':
 	stream.stop_stream()
 	stream.close()
 	audio.terminate()
-			
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
