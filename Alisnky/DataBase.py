@@ -235,6 +235,14 @@ class database:
 		cursor.execute(sql, [(db_motor_id)])
 		return cursor.fetchone()[2]
 
+	def convert_part(self, part):
+		"""
+
+		"""
+		sql = "SELECT * FROM conversion WHERE part = ?"
+		cursor.execute(sql, [(part)])
+		return cursor.fetchone()[0]
+
 	def get_conversion_info(self, db_motor_id):
 		"""
 		Сообщает всю информацию о моторе из БД (из таблицы конвертации)
@@ -264,9 +272,12 @@ class database:
                	   """)
 
 		# данные для конвертации
-		mas = [(1, 1, 'left hand', 'X'), 	(2, 2, 'left hand', 'Y'),
-       		   (3, 3, 'right hand', 'X'), 	(4, 4, 'right hand', 'Y'),
-       		   (5, 5, 'had', 'X'), 			(6, 6, 'had', 'Z')]
+		mas =  [(1, 1, 'arm_l_rotation_euler_X', 'X'), 
+				(2, 2, 'arm_l_rotation_euler_Y', 'Y'),
+       			(3, 3, 'arm_r_rotation_euler_X', 'X'), 
+       			(4, 4, 'arm_r_rotation_euler_Y', 'Y'),
+       			(5, 5, 'head_rotation_euler_X', 'X'), 
+       			(6, 6, 'head_rotation_euler_Z', 'Z')]
 
 		cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
 		conn.commit()
