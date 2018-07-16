@@ -7,9 +7,13 @@ REACTIONS_MAPPING = {
     "бесздействие":"inactivity",
     "гнев":"anger",
     "грусть":"sadness",
+    "задумчивость":"thinking",
     "извинение":"excuses",
+    "компенсация+бездействие":"inactivity",
     "недоумение":"nedoumenie",
     "неоумение":"nedoumenie",
+    "обобщение":"suming-up",
+    "отрицание":"negation",
     "перечисление":"enumeration",
     "подытоживание":"suming-up",
     "приветствие":"greeting",
@@ -18,10 +22,9 @@ REACTIONS_MAPPING = {
     "прощание":"goodbye",
     "радость":"joy",
     "размышление":"thinking",
-    "задумчивость":"thinking",
     "смущение":"confusion",
     "согласие":"agree",
-    "удивление":"amaze"
+    "удивление":"amaze",
 }
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(os.getcwd(),'credential.json')
