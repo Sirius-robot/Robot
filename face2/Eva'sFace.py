@@ -2,7 +2,7 @@
 import pygame
 import win32gui, win32api,win32con
 
-from feature import Face
+from feature import Face, Feature
 
 monitors = win32api.EnumDisplayMonitors()
 
@@ -37,8 +37,12 @@ mouth_embarrassment = pygame.image.load("Images/mouths/mouth_embarrassment.png")
 mouth_boredom = pygame.image.load("Images/mouths/mouth_boredom.png")
 mouth_surprise = pygame.image.load("Images/mouths/mouth_surprise.png")
 
-moveeye = pygame.event.Event(pygame.USEREVENT+1, time = 80, x = 20, y = 30)
+
+
+moveeye = pygame.event.Event(pygame.USEREVENT+1, time = 80, x = 200, y = 300)
+moveeye1 = pygame.event.Event(pygame.USEREVENT+1, time = 200, x = 20, y = 30)
 pygame.event.post(moveeye)
+pygame.event.post(moveeye1)
 
 done = False
 
@@ -48,14 +52,42 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        if event == moveeye:
+        elif event == moveeye:
             x_step = moveeye.x // steps
             y_step = moveeye.y // steps
             time_step = moveeye.time // steps
-            for i in range (1,steps):
-                face.l_pupil.move(face.l_pupil.init_x + x_step * i, face.l_pupil.init_y + y_step * i)
-                face.update()
+            for i in range (1,steps+1):
+                print(face.l_pupil.init_bounds.x)
+                print(face.l_pupil.init_bounds.y)
+                print(face.l_pupil.bounds.x)
+                print(face.l_pupil.bounds.y)
                 pygame.time.wait(time_step)
+                face.l_pupil.move(x_step * i, y_step * i)
+                face.update()
+            print(face.l_pupil.init_bounds.x)
+            print(face.l_pupil.init_bounds.y)
+            print(face.l_pupil.bounds.x)
+            print(face.l_pupil.bounds.y)
+            pygame.time.wait(moveeye.time % steps)
+            face.update()
+        elif event == moveeye1:
+            x_step = moveeye1.x // steps
+            y_step = moveeye1.y // steps
+            time_step = moveeye1.time // steps
+            for i in range(1, steps + 1):
+                print(face.l_pupil.init_bounds.x)
+                print(face.l_pupil.init_bounds.y)
+                print(face.l_pupil.bounds.x)
+                print(face.l_pupil.bounds.y)
+                pygame.time.wait(time_step)
+                face.l_pupil.move(x_step * i, y_step * i)
+                face.update()
+            print(face.l_pupil.init_bounds.x)
+            print(face.l_pupil.init_bounds.y)
+            print(face.l_pupil.bounds.x)
+            print(face.l_pupil.bounds.y)
+            pygame.time.wait(moveeye1.time % steps)
+            face.update()
         elif event.type == pygame.KEYDOWN:
             if  event.key == pygame.K_q:
                 eyebrows = pygame.transform.rotate(eyebrows2,0)
@@ -76,7 +108,8 @@ while not done:
             elif event.key == pygame.K_g:
                         mouth = pygame.transform.rotate(mouth_surprise, 0)
 
-
+    surface.fill((0,0,0))
     face.update()
+
 
 pygame.quit()
