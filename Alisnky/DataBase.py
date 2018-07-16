@@ -83,14 +83,36 @@ class database:
 		cursor.execute(sql, [(what)], [(where)])
 		conn.commit()
 
+	def all_gestures(self):
+		sql = "SELECT * FROM gestures"
+		cursor.execute(sql)
+		return cursor.fetchall()
+
 	def get_gesture_id(self, title):
 		"""
-		Возвращает id жеста по названию
+		Возвращает id жеста по его названию
 		get_gesture_id('smile')
 		"""
 		sql = "SELECT * FROM gestures WHERE title = ?"
 		cursor.execute(sql, [(title)])
-		return cursor.fetchall()[0][0]
+		answer = cursor.fetchone()
+		if answer: 
+			return answer[0]
+		else:
+			return 0
+
+	def get_gesture_title(delf, gesture_id):
+		"""
+		Возвращает название жеста по его id
+		get_gesture_title(11)
+		"""
+		sql = "SELECT * FROM gestures WHERE gesture_id = ?"
+		cursor.execute(sql, [(gesture_id)])
+		answer = cursor.fetchone()
+		if answer:
+			return answer[1]
+		else:
+			return 0
 
 	def get_gesture(self, title):
 		"""
@@ -237,7 +259,7 @@ class database:
 
 	def convert_part(self, part):
 		"""
-
+		Функция конвертации названия части тела в id необходимого мотора в бд
 		"""
 		sql = "SELECT * FROM conversion WHERE part = ?"
 		cursor.execute(sql, [(part)])
