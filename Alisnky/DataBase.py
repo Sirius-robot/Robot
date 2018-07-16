@@ -80,7 +80,7 @@ class database:
 			sql = """UPDATE gestures 
 			SET title = ? 
 			WHERE title = ?"""
-		cursor.execute(sql, [(what)], [(where)])
+		cursor.execute(sql, [(what), (where)])
 		conn.commit()
 
 	def all_gestures(self):
@@ -303,6 +303,53 @@ class database:
 
 		cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
 		conn.commit()
+
+	def write_eyes(self, gesture_id, x, y, tp):
+		"""
+		Запись нового движения зрачков.
+		Необходимо указать id жеста, x и y куда нужно переместить зрачки, 
+		и временную точку.
+		"""
+		sql = """INSERT INTO eyes 
+		(gesture_id, x, y, timepoint) 
+		VALUES (?, ?, ?, ?)"""
+		cursor.execute(sql, [(gesture_id), (x), (y), (tp)])
+		conn.commit()
+
+	def del_eyes(self, gesture_id):
+		"""
+		Удоляет все движения глаз привязанные к определённому id жеста.
+		"""
+		sql = "DELETE FROM eyes WHERE gesture_id = ?"
+		cursor.execute(sql, [(gesture_id)])
+		conn.commit()
+
+	def get_eyes(self, gesture_id):
+		"""
+		Возвращает всю информацию о движениях глаз по id жеста к которому 
+		они привязаны.
+		Example:
+		[(1, 3, 7.0, 5.0, 80), (2, 3, 10.0, 10.0, 140), 
+		(3, 3, -400.0, 1000.0, 1000), (4, 3, 6.0, 5.0, 50), 
+		(5, 3, 10.0, 10.0, 69)]
+		"""
+		sql = "SELECT * FROM eyes WHERE gesture_id = ? ORDER BY timepoint"
+		cursor.execute(sql, [(gesture_id)])
+		return cursor.fetchall()
+
+	def eyes(self, title):
+		"""
+
+		"""
+		answer = self.get_eyes(self.get_gesture_id(title))
+		data = []
+		for i in range(len(answer)):
+			temp = []
+			temp.append(answer[i][4])
+			temp.append(answer[i][2])
+			temp.append(answer[i][3])
+			data.append(temp)
+		return data
 
 conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
