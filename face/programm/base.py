@@ -3,9 +3,6 @@ from pygame.locals import *
 from eyebrows import *
 from feature import *
 from face.images import *
-import threading, time
-from threading import Thread
-from queue import Queue
 monitors = win32api.EnumDisplayMonitors() #list of monitors' coords information/
 
 pygame.init()
@@ -46,66 +43,26 @@ sm = Feature(x1, y1, w1, h1, '../images/eyebrows/eyebrows.png')
 #sm.draw(surface)
 
 
-move_side_event, move_down_event, pygame.K_LEFT = sm.move(10, 0), sm.move(0, 10), sm.move(-10, 0)
-
-queue = Queue()
-events = [move_side_event, move_down_event,move_side_event, pygame.K_LEFT, pygame.K_LEFT ]
-THREADS_COUNT = 2
-LOCK = threading.RLock()
 
 
+MOVE_SIDE = 1000
+MOVE_DOWN = 3500
+clock = pygame.time.Clock()
+move_side_event = pygame.USEREVENT + 1
+move_down_event = pygame.USEREVENT + 2
+reloaded_event  = pygame.USEREVENT + 3
+pygame.time.set_timer(move_side_event, MOVE_SIDE)
+pygame.time.set_timer(move_down_event, MOVE_DOWN)
+
+eyebrows = eyebrows_norm
 mainLoop = True
-#move_side_event = pygame.USEREVENT + 1
-#move_down_event = pygame.USEREVENT + 2
-#reloaded_event = pygame.USEREVENT + 3
-class EventMaker(Thread):
-    """
-    A threading example
-    """
-
-    def __init__(self):
-        """Инициализация потока"""
-        Thread.__init__(self)
-        self.MOVE_SIDE = 3000
-        self.MOVE_DOWN = 1000
-
-    def run(self):
-        """Запуск потока"""
-        while mainLoop:
-            self.MOVE_SIDE += 20
-            self.MOVE_DOWN += 20
-            #print('potok')
-            #pygame.time.set_timer(move_side_event, self.MOVE_SIDE)
-            #pygame.time.set_timer(move_down_event, self.MOVE_DOWN)
-
-            try:
-                queue.put_nowait(events[0])
-                events.pop(0)
-            except Queue.Empty:
-                break
-
-
-#MOVE_SIDE# = 1000
-#MOVE_DOWN# = 3500
-#clock = p#ygame.time.Clock()
-#move_side_event = pygame.USEREVENT + 1
-#move_down_event = pygame.USEREVENT + 2
-#reloaded_event  = pygame.USEREVENT + 3
-#pygame.time.set_timer(move_side_event, MOVE_SIDE)
-#pygame.time.set_timer(move_down_event, MOVE_DOWN)
-eyebrows  = eyebrows_norm
-
-give_to_q = EventMaker()
-give_to_q.start()
-#pygame.time.set_tim  er(eyebr.move(-10, 0), 10)
+#pygame.time.set_timer(eyebr.move(-10, 0), 10)
 #pygame.time.set_timer(USEREVENT, delay)
 while mainLoop:
     #clock.tick(1)
     #pygame.time.set_timer(eyebr.move(-10, 0), 10)
-    for event in queue:
-        print('loop')
+    for event in pygame.event.get():
         if event.type == move_side_event:
-            print('timer')
             sm.move(10, 0)
         elif event.type == move_down_event:
             sm.move(0, 10)
@@ -119,7 +76,6 @@ while mainLoop:
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                print('kl')
                 sm.move(-10, 0)
 
             elif event.key == pygame.K_RIGHT:

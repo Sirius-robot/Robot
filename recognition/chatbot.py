@@ -1,7 +1,5 @@
-from Modules import Intents
 import os
 import dialogflow
-# import sys
 
 REACTIONS_MAPPING = {
     "аргументация":"argumentation",
@@ -41,6 +39,9 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
+
+    if text = "": text = "черешенка1315"
+
     text_input = dialogflow.types.TextInput(
         text=text, language_code=language_code)
     query_input = dialogflow.types.QueryInput(text=text_input)
@@ -52,7 +53,7 @@ def chat_bot(input_text):
     '''Получает от пользователя текст, возвращает ответ и тег.
         Gets input text, returns text answer and tag.'''
 
-    output = (Intents.detect_intent_texts(project_id, session_id, input_text, language_code))
+    output = (detect_intent_texts(project_id, session_id, input_text, language_code))
     try:
         tag = REACTIONS_MAPPING[output[output.find('<')+1:output.find('>')].lower()]
     except:
@@ -61,4 +62,4 @@ def chat_bot(input_text):
     
     return text, tag
 
-# print(chat_bot(sys.argv[1]))
+print(chat_bot(""))
