@@ -43,7 +43,7 @@ def detect_intent_texts(project_id, session_id, text, language_code):
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
 
-    if text = "": text = "черешенка1315"
+    if text == "": text = "черешенка1315"
 
     text_input = dialogflow.types.TextInput(
         text=text, language_code=language_code)
@@ -65,4 +65,4 @@ def chat_bot(input_text):
     
     return text, tag
 
-print(chat_bot(""))
+# print(chat_bot("привет"))
