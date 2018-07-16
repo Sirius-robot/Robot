@@ -95,7 +95,7 @@ while 1:
 		print("\nData of gesture =", database.gesture(gesture_name))
 		print("\nData of eyes =", database.eyes(gesture_name))
 
-		print("\nComplate!")
+		print("\nCompleted!")
 	elif code == 2:
 		print("\nData:")
 		data = database.all_gestures()
@@ -108,14 +108,14 @@ while 1:
 			if database.get_gesture_title(gesture):
 				database.del_gesture(ID, gesture)
 				database.del_eyes(gesture)
-				print("\nComplate!")
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 		except ValueError:
 			if database.get_gesture_id(gesture):
 				database.del_gesture(TITLE, gesture)
 				database.del_eyes(database.get_gesture_id(gesture))
-				print("\nComplate!")
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 	elif code == 4:

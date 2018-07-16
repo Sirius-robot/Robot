@@ -41,4 +41,4 @@ cursor.execute("""CREATE TABLE eyes
 
 conn.commit()
 
-print("Complete!")
+print("Completed!")
