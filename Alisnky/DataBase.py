@@ -349,11 +349,17 @@ class database:
 		"""
 		answer = self.get_eyes(self.get_gesture_id(title))
 		data = []
+
+		tp = [0]
+		for i in range(len(answer)):
+			tp.append(answer[i][4])
+
 		for i in range(len(answer)):
 			temp = []
-			temp.append(answer[i][4])
-			temp.append(answer[i][2])
-			temp.append(answer[i][3])
+			temp.append(tp[i]) # Time point
+			temp.append(answer[i][2]) # X
+			temp.append(answer[i][3]) # Y
+			temp.append(tp[i + 1] - tp[i]) # Time
 			data.append(temp)
 		return data
 

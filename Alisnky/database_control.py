@@ -51,8 +51,7 @@ while 1:
 
 		x_error = -0.01483
 		y_error = -0.194612
-		x_k = 50 / 0.052466
-		y_k = 50 / 0.040542
+		k = 55 / 0.035
 
 		for i in range(len(answer1)):
 			ID = answer1[i].attrs['id']
@@ -96,8 +95,12 @@ while 1:
 
 		print("\nEyes data:")
 		for i in range(len(eyes_tp)):
-			database.write_eyes(gesture_id, x[i] - x_error, y[i] - y_error, eyes_tp[i])
-			print("DB>", gesture_id, x[i], y[i], eyes_tp[i])
+			final_x = int(round((x[i] - x_error) * k))
+			if final_x > 55: final_x = 55
+			final_y = int(round((y[i] - y_error) * k))
+			if final_y > 55: final_y = 55
+			database.write_eyes(gesture_id, final_x, final_y, eyes_tp[i])
+			print("DB>", gesture_id, final_x, final_y, eyes_tp[i])
 
 		print("\nData of gesture =", database.gesture(gesture_name))
 		print("\nData of eyes =", database.eyes(gesture_name))
