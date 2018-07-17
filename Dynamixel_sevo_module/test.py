@@ -11,6 +11,7 @@ from sinthesis import *
 time_iter = -10
 
 def master():
+    db = database()
     while 1:
         f = open('vvv.bml', 'r')
         z = f.read()
@@ -21,7 +22,7 @@ def master():
         # sinthesis.speech(text)
         audio = speech(text)
         winsound.PlaySound(audio, winsound.SND_MEMORY)
-        command_data = database.gesture(gestur)
+        command_data = db.gesture(gestur)
         time_dict = {}
         for commands_time in command_data:
             time = commands_time[0]
