@@ -2,6 +2,8 @@ from DataBase import *
 from bs4 import BeautifulSoup
 import os
 
+database = database()
+
 while 1:
 	print("\nWhat do you wanna do?\n")
 	print("1 Write new gesture") 
@@ -47,6 +49,11 @@ while 1:
 				 'head_rotation_euler_X': 0.0 - 150,
 				 'head_rotation_euler_Z': 0.0 - 150}
 
+		x_error = -0.01483
+		y_error = -0.194612
+		x_k = 50 / 0.052466
+		y_k = 50 / 0.040542
+
 		for i in range(len(answer1)):
 			ID = answer1[i].attrs['id']
 			print("\nid =", ID)
@@ -89,7 +96,7 @@ while 1:
 
 		print("\nEyes data:")
 		for i in range(len(eyes_tp)):
-			database.write_eyes(gesture_id, x[i], y[i], eyes_tp[i])
+			database.write_eyes(gesture_id, x[i] - x_error, y[i] - y_error, eyes_tp[i])
 			print("DB>", gesture_id, x[i], y[i], eyes_tp[i])
 
 		print("\nData of gesture =", database.gesture(gesture_name))
