@@ -2,12 +2,13 @@ import botcontrol
 import threading
 import sys
 import time
-from test1 import *
+
 sys.path.insert(0, '../Alisnky')
 from DataBase import *
 sys.path.insert(1, '../Sinthesis')
 from sinthesis import *
-
+sys.path.insert(2, '../recognition')
+from parsing_bml import *
 time_iter = -10
 
 def master():
@@ -16,8 +17,9 @@ def master():
         z = f.read()
         x = dictionary_result(z)
         print(x[0])
-        gestur = x[0]
-        text = gestur
+        gestur = x['figure']
+        speech = x['speech']
+        text = speech
         # sinthesis.speech(text)
         audio = speech(text)
         winsound.PlaySound(audio, winsound.SND_MEMORY)
