@@ -1,7 +1,7 @@
 import pygame, win32api, win32gui, win32con, game
 from pygame.locals import *
 from eyebrows import *
-from feature import *
+from feature2 import *
 from face.images import *
 monitors = win32api.EnumDisplayMonitors() #list of monitors' coords information/
 
@@ -21,7 +21,7 @@ win32gui.MoveWindow(hwnd, win32api.GetMonitorInfo(monitors[1][0])['Monitor'][0],
 bgColor = (0,255,0)
 
 # Load and set up graphics.
-background = Feature(0,0,800,480,"../images/background.png")
+background = Feature(0,0,"../images/background.png")
 eye_socket = Feature(0,0,800,480,"../images/eye_socket.png")
 
 pupil1 = Feature(95,110,116,117,"../images/onepupil.png")

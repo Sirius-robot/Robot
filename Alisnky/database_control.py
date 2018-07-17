@@ -38,6 +38,8 @@ while 1:
 
 		database.write_gesture(gesture_name)
 
+		gesture_id = database.get_gesture_id(gesture_name)
+
 		error = {'arm_l_rotation_euler_X': 19.75554 - 200,
 				 'arm_l_rotation_euler_Y': 13.4428 - 150,
 				 'arm_r_rotation_euler_X': -19.61401 - 100,
@@ -67,20 +69,35 @@ while 1:
 				temp = str(answer2[1].float_array.string)
 				angels = [float(x) - error[ID] for x in temp.split()]
 				DB_M_id = database.convert_part(ID)
-				gesture_id = database.get_gesture_id(gesture_name)
 				for j in range(len(tp)):
 					database.write_motion(DB_M_id, gesture_id, angels[j], tp[j])
 					print("DB>", DB_M_id, gesture_id, angels[j], tp[j])
 			elif ID == "eyes_location_X":
-				print("NO DATA!")
+				temp = str(answer2[0].float_array.string)
+				eyes_tp = [int(round(float(x) * 1000)) for x in temp.split()]
+				temp = str(answer2[1].float_array.string)
+				x = [float(x) for x in temp.split()]
+				print("TP", eyes_tp)
+				print("X", x)
 			elif ID == "eyes_location_Z":
-				print("NO DATA!")
+				temp = str(answer2[0].float_array.string)
+				eyes_tp = [int(round(float(x) * 1000)) for x in temp.split()]
+				temp = str(answer2[1].float_array.string)
+				y = [float(x) for x in temp.split()]
+				print("TP", eyes_tp)
+				print("Y", y)
 
-		print("\nData =", database.gesture(gesture_name))
+		print("\nEyes data:")
+		for i in range(len(eyes_tp)):
+			database.write_eyes(gesture_id, x[i], y[i], eyes_tp[i])
+			print("DB>", gesture_id, x[i], y[i], eyes_tp[i])
 
-		print("\nComplate!")
+		print("\nData of gesture =", database.gesture(gesture_name))
+		print("\nData of eyes =", database.eyes(gesture_name))
+
+		print("\nCompleted!")
 	elif code == 2:
-		print("\ndata:")
+		print("\nData:")
 		data = database.all_gestures()
 		for i in range(len(data)):
 			print(data[i][0], data[i][1])
@@ -90,13 +107,15 @@ while 1:
 			gesture = int(gesture)
 			if database.get_gesture_title(gesture):
 				database.del_gesture(ID, gesture)
-				print("\nComplate!")
+				database.del_eyes(gesture)
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 		except ValueError:
 			if database.get_gesture_id(gesture):
 				database.del_gesture(TITLE, gesture)
-				print("\nComplate!")
+				database.del_eyes(database.get_gesture_id(gesture))
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 	elif code == 4:

@@ -1,7 +1,5 @@
-
 import os
 import dialogflow
-# import sys
 
 REACTIONS_MAPPING = {
     "аргументация":"argumentation",
@@ -9,9 +7,13 @@ REACTIONS_MAPPING = {
     "бесздействие":"inactivity",
     "гнев":"anger",
     "грусть":"sadness",
+    "задумчивость":"thinking",
     "извинение":"excuses",
+    "компенсация+бездействие":"inactivity",
     "недоумение":"nedoumenie",
     "неоумение":"nedoumenie",
+    "обобщение":"suming-up",
+    "отрицание":"negation",
     "перечисление":"enumeration",
     "подытоживание":"suming-up",
     "приветствие":"greeting",
@@ -20,10 +22,9 @@ REACTIONS_MAPPING = {
     "прощание":"goodbye",
     "радость":"joy",
     "размышление":"thinking",
-    "задумчивость":"thinking",
     "смущение":"confusion",
     "согласие":"agree",
-    "удивление":"amaze"
+    "удивление":"amaze",
 }
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(os.getcwd(),'credential.json')
@@ -41,6 +42,9 @@ def detect_intent_texts(project_id, session_id, text, language_code):
 
     session_client = dialogflow.SessionsClient()
     session = session_client.session_path(project_id, session_id)
+
+    if text == "": text = "черешенка1315"
+
     text_input = dialogflow.types.TextInput(
         text=text, language_code=language_code)
     query_input = dialogflow.types.QueryInput(text=text_input)
@@ -61,4 +65,4 @@ def chat_bot(input_text):
     
     return text, tag
 
-# print(chat_bot(sys.argv[1]))
+# print(chat_bot("привет"))

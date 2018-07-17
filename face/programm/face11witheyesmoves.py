@@ -1,4 +1,3 @@
-#Hi
 import pygame
 import win32gui, win32api,win32con
 
@@ -110,6 +109,5 @@ while not done:
 
     surface.fill((0,0,0))
     face.update()
-
 
 pygame.quit()
