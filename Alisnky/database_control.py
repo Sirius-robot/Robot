@@ -2,6 +2,8 @@ from DataBase import *
 from bs4 import BeautifulSoup
 import os
 
+database = database()
+
 while 1:
 	print("\nWhat do you wanna do?\n")
 	print("1 Write new gesture") 
@@ -47,6 +49,10 @@ while 1:
 				 'head_rotation_euler_X': 0.0 - 150,
 				 'head_rotation_euler_Z': 0.0 - 150}
 
+		x_error = -0.01483
+		y_error = -0.194612
+		k = 55 / 0.035
+
 		for i in range(len(answer1)):
 			ID = answer1[i].attrs['id']
 			print("\nid =", ID)
@@ -89,13 +95,17 @@ while 1:
 
 		print("\nEyes data:")
 		for i in range(len(eyes_tp)):
-			database.write_eyes(gesture_id, x[i], y[i], eyes_tp[i])
-			print("DB>", gesture_id, x[i], y[i], eyes_tp[i])
+			final_x = int(round((x[i] - x_error) * k))
+			if final_x > 55: final_x = 55
+			final_y = int(round((y[i] - y_error) * k))
+			if final_y > 55: final_y = 55
+			database.write_eyes(gesture_id, final_x, final_y, eyes_tp[i])
+			print("DB>", gesture_id, final_x, final_y, eyes_tp[i])
 
 		print("\nData of gesture =", database.gesture(gesture_name))
 		print("\nData of eyes =", database.eyes(gesture_name))
 
-		print("\nComplate!")
+		print("\nCompleted!")
 	elif code == 2:
 		print("\nData:")
 		data = database.all_gestures()
@@ -108,14 +118,14 @@ while 1:
 			if database.get_gesture_title(gesture):
 				database.del_gesture(ID, gesture)
 				database.del_eyes(gesture)
-				print("\nComplate!")
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 		except ValueError:
 			if database.get_gesture_id(gesture):
 				database.del_gesture(TITLE, gesture)
 				database.del_eyes(database.get_gesture_id(gesture))
-				print("\nComplate!")
+				print("\nCompleted!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 	elif code == 4:

@@ -33,7 +33,7 @@ def robotControl(ID, TimeR, Dego):
         dgp=Deg[q]
         dgt=Time[q]
         dgts = Dego[q]
-        dgs.append(int((dgp*1023/300)/(dgt*0.002)))
+        dgs.append(int((dgp*1023/300)/(dgt*0.004)))
         dgd.append(int(dgts*1023/300))
         if dgd[q] > 1023: dgd[q] = 1023
         if dgs[q] > 1023: dgs[q] = 1023

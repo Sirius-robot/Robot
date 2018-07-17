@@ -1,5 +1,7 @@
 from DataBase import *
 
+database = database()
+
 gesname = 'smail'
 
 # записываем в БД новый жест и 4 движения для него

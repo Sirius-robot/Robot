@@ -23,9 +23,9 @@ def writetofile(frames, countfile):
 	wavfile.setframerate(RATE)
 	wavfile.writeframes(b''.join(frames))#append frames recorded to file
 	wavfile.close() 
-print('test')
+
 key=msvcrt.getch()
-print('tet2')
+
 if key==b'\r': #нужно нажать enter
 	audio=pyaudio.PyAudio() 
 	stream=audio.open(format=FORMAT,channels=CHANNELS, 
@@ -63,7 +63,7 @@ if key==b'\r': #нужно нажать enter
 				record = True
 				frames.append(data)
 				n=0
-			
-	stream.stop_stream()
-	stream.close()
-	audio.terminate()
+	if key==b'\r':		
+		stream.stop_stream()
+		stream.close()
+		audio.terminate()

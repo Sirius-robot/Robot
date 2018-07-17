@@ -1,53 +1,71 @@
 import botcontrol
 import threading
 import sys
+import time
+
 sys.path.insert(0, '../Alisnky')
 from DataBase import *
-command_data = database.gesture('smail')
+sys.path.insert(1, '../Sinthesis')
+from sinthesis import *
+sys.path.insert(2, '../recognition')
+from parsing_bml import *
 time_iter = -10
 
-time_dict = {}
+def master():
+    db = database()
+    while 1:
+        f = open('vvv.bml', 'r')
+        z = f.read()
+        x = dictionary_result(z)
+        print(x[0])
+        gestur = x['figure']
+        speech = x['speech']
+        text = speech
+        # sinthesis.speech(text)
+        audio = speech(text)
+        winsound.PlaySound(audio, winsound.SND_MEMORY)
+        command_data = db.gesture(gestur)
+        time_dict = {}
+        for commands_time in command_data:
+            time = commands_time[0]
+            commands = commands_time[1]
+            ids = []
+            angles = []
+            dif_times = []
+            for command in commands:
+                ids.append(command[0])
+                angles.append(command[1])
+                dif_times.append(command[2])
+                time_dict[time] = [ids, angles, dif_times]#очередь
 
-#database.del_gesture(TITLE, gesname)
-for commands_time in command_data:
-    time = commands_time[0]
-    commands = commands_time[1]
-    ids = []
-    angles = []
-    dif_times = []
-    for command in commands:
-        ids.append(command[0])
-        angles.append(command[1])
-        dif_times.append(command[2])
-        time_dict[time] = [ids, angles, dif_times]
-#database.del_gesture(TITLE, gesname)
-#print(time_dict)
-botcontrol.multiInt(ids)
+        sleep(5)
 
-#botcontrol.multiInt((1,2,3,4,5,6))
-#botcontrol.robotControl((1,2,3,5,6),(200,400,1000,200,500),(200,300,300,300,300,30))
-lenni=0
-def work():
-    global time_iter
-    time_iter += 10
-    return time_iter
+def slaver():
 
-def timer1():
-    global lenni
-    threading.Timer(0.01,timer1).start()
-    d = work()
-    lenny = len(time_dict.keys())
-    if lenny == lenni:
-        print('THE END')
-        lenni+=1
-    if time_dict.get(d,666) != 666:
-        lenni = lenni + 1
-        data = time_dict[d]
-        print(time_dict.get(d))
-        print(data[0])
-        print(data[2])
-        print(data[1])
-        botcontrol.robotControl(data[0],data[2],data[1])
+    def work():
+        global time_iter
+        time_iter += 10
+        return time_iter
 
-#database.del_gesture(TITLE, gesname)
-timer1()
+    def timer1():
+        global lenni
+        threading.Timer(0.01, timer1).start()
+        d = work()
+        lenny = len(time_dict.keys())
+        if lenny == lenni:
+            print('THE END')
+            lenni += 1
+        if time_dict.get(d, 666) != 666:
+            lenni = lenni + 1
+            data = time_dict[d]
+            print(time_dict.get(d))
+            print(data[0])
+            print(data[2])
+            print(data[1])
+            botcontrol.robotControl(data[0], data[2], data[1])
+    timer1()
+
+mastert = threading.Thread(target=master)
+mastert.start()
+#slavert = threading.Thread(target=slaver)
+#slavert.start()
