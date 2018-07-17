@@ -24,7 +24,7 @@ text = "Привет"
 audio = speech(text)
 with open(text[:20]+'.wav','wb') as file:
 	file.write(audio)
-winsound.PlaySound(text+'.wav', winsound.SND_FILENAME)
+winsound.PlaySound(text+'wav', winsound.SND_ASYNC | winsound.SND_ALIAS )
 
 
 

@@ -12,6 +12,9 @@ from msvcrt import getch
 from recognition import rec
 from recognition import parseXML
 import chatbot
+import configparser
+
+
 
 
 def writetofile(frames, countfile):
@@ -29,7 +32,10 @@ RATE=44100
 CHUNK=1024
 RECORD_SECONDS=15
 
-
+config = configparser.ConfigParser()
+config.read("../settings.ini")
+VOLUME = int(config.get("Settings", "VOLUME"))
+COUNT = int(config.get("Settings", "COUNT"))
 
 audio=pyaudio.PyAudio() 
 stream=audio.open(format=FORMAT,channels=CHANNELS, 
@@ -49,11 +55,11 @@ while True:
 		data_chunk=array('h',data)
 		vol=max(data_chunk)
 		frames.append(data)
-		if (vol>=500):
+		if (vol>=VOLUME):
 			n=0
 		else:
 			n=n+1
-			if n>7:
+			if n>COUNT:
 				countfile += 1
 				writetofile(frames, countfile)
 				record = False
@@ -64,13 +70,14 @@ while True:
 		data=stream.read(CHUNK)
 		data_chunk=array('h',data)
 		vol=max(data_chunk)
-		if(vol>=500):
+		if(vol>=VOLUME):
 			frames=[]
 			record = True
 			print('voice recording')
 			frames.append(data)
 			n=0
-	
+			
+
 stream.stop_stream()
 stream.close()
 audio.terminate()
