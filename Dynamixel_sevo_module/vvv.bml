@@ -2,6 +2,7 @@
     <figure name="test"/>
     <mouth img="img"/>
     <brows img="img"/>
-    <speech></speech>
+    <speech>привет человека кусок</speech>
     <pupils percent="100"/>
 </bml>
+ы

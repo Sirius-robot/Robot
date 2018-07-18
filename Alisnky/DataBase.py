@@ -281,6 +281,14 @@ class database:
 		self.cursor.execute(sql, [(db_motor_id)])
 		return self.cursor.fetchone()
 
+	def get_all_conversion_info(self):
+		"""
+		Сообщает всю информацию из таблицы конвертации
+		"""
+		sql = "SELECT * FROM conversion"
+		self.cursor.execute(sql)
+		return self.cursor.fetchall()
+
 	def new_conversion_table(self):
 		"""
 		Удаляет и создаёт новую таблицу конвертации. Нужна для изменения данных.
