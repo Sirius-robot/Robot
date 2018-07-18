@@ -45,7 +45,7 @@ class Face:
     def update(self):
         self.bg.draw(self.surface)
         self.pupil.draw(self.surface)
-        #self.mask.draw(self.surface)
+        self.mask.draw(self.surface)
         self.mouth.draw(self.surface)
         self.eyebrows.draw(self.surface)
         pygame.display.update()

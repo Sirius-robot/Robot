@@ -2,9 +2,6 @@ import sqlite3
 ID = 1
 TITLE = 0
 class database:
-	def __init__(self):
-		self.conn = sqlite3.connect("database.db")
-		self.cursor = self.conn.cursor()
 
 	def write_motion(self, motor_id, gesture_id, angel, timepoint):
 		"""
@@ -14,8 +11,8 @@ class database:
 		sql = """INSERT INTO motions 
 		(motor_id, gesture_id, angel, timepoint) 
 		VALUES (?, ?, ?, ?)"""
-		self.cursor.execute(sql, [(motor_id), (gesture_id), (angel), (timepoint)])
-		self.conn.commit()
+		cursor.execute(sql, [(motor_id), (gesture_id), (angel), (timepoint)])
+		conn.commit()
 
 	def del_motion(self, motion_id):
 		"""
@@ -23,8 +20,8 @@ class database:
 		del_motion(11)
 		"""
 		sql = "DELETE FROM motions WHERE motion_id = ?"
-		self.cursor.execute(sql, [(motion_id)])
-		self.conn.commit()
+		cursor.execute(sql, [(motion_id)])
+		conn.commit()
 
 	def change_motion(self, motion_id, motor_id, gesture_id, angel, timepoint):
 		"""
@@ -33,8 +30,8 @@ class database:
 		sql = """UPDATE motions 
 			SET motor_id = ?, gesture_id = ?, angel = ?, timepoint = ?
 			WHERE motion_id = ?"""
-		self.cursor.execute(sql, [(motor_id), (gesture_id), (angel), (timepoint), (motion_id)] )
-		self.conn.commit()
+		cursor.execute(sql, [(motor_id), (gesture_id), (angel), (timepoint), (motion_id)] )
+		conn.commit()
 
 	def get_motion(self, motion_id):
 		"""
@@ -42,8 +39,8 @@ class database:
 		get_motion(11)
 		"""
 		sql = "SELECT * FROM motions WHERE motion_id = ?"
-		self.cursor.execute(sql, [(motion_id)])
-		return self.cursor.fetchone()
+		cursor.execute(sql, [(motion_id)])
+		return cursor.fetchone()
 
 	def write_gesture(self, title):
 		"""
@@ -51,8 +48,8 @@ class database:
 		write_gesture('smile'):
 		"""
 		sql = "INSERT INTO gestures (title) VALUES (?)"
-		self.cursor.execute(sql, [(title)])
-		self.conn.commit()
+		cursor.execute(sql, [(title)])
+		conn.commit()
 
 	def del_gesture(self, idti, where):
 		"""
@@ -62,13 +59,13 @@ class database:
 		if idti:
 			sql1 = "DELETE FROM gestures WHERE gesture_id = ?"
 			sql2 = "DELETE FROM motions WHERE gesture_id = ?"
-			self.cursor.execute(sql2, [(where)])
+			cursor.execute(sql2, [(where)])
 		else:
 			sql1 = "DELETE FROM gestures WHERE title = ?"
 			sql2 = "DELETE FROM motions WHERE gesture_id = ?"
-			self.cursor.execute(sql2, [(self.get_gesture_id(where))])
-		self.cursor.execute(sql1, [(where)])
-		self.conn.commit()
+			cursor.execute(sql2, [(self.get_gesture_id(where))])
+		cursor.execute(sql1, [(where)])
+		conn.commit()
 
 	def change_gesture(self, idti, what, where):
 		"""
@@ -83,13 +80,13 @@ class database:
 			sql = """UPDATE gestures 
 			SET title = ? 
 			WHERE title = ?"""
-		self.cursor.execute(sql, [(what), (where)])
-		self.conn.commit()
+		cursor.execute(sql, [(what), (where)])
+		conn.commit()
 
 	def all_gestures(self):
 		sql = "SELECT * FROM gestures"
-		self.cursor.execute(sql)
-		return self.cursor.fetchall()
+		cursor.execute(sql)
+		return cursor.fetchall()
 
 	def get_gesture_id(self, title):
 		"""
@@ -97,21 +94,21 @@ class database:
 		get_gesture_id('smile')
 		"""
 		sql = "SELECT * FROM gestures WHERE title = ?"
-		self.cursor.execute(sql, [(title)])
-		answer = self.cursor.fetchone()
+		cursor.execute(sql, [(title)])
+		answer = cursor.fetchone()
 		if answer: 
 			return answer[0]
 		else:
 			return 0
 
-	def get_gesture_title(self, gesture_id):
+	def get_gesture_title(delf, gesture_id):
 		"""
 		Возвращает название жеста по его id
 		get_gesture_title(11)
 		"""
 		sql = "SELECT * FROM gestures WHERE gesture_id = ?"
-		self.cursor.execute(sql, [(gesture_id)])
-		answer = self.cursor.fetchone()
+		cursor.execute(sql, [(gesture_id)])
+		answer = cursor.fetchone()
 		if answer:
 			return answer[1]
 		else:
@@ -123,8 +120,8 @@ class database:
 		get_gesture('smile')
 		"""
 		sql = "SELECT * FROM motions WHERE gesture_id = ? ORDER BY timepoint"
-		self.cursor.execute(sql, [(self.get_gesture_id(title))])
-		answer = self.cursor.fetchall()
+		cursor.execute(sql, [(self.get_gesture_id(title))])
+		answer = cursor.fetchall()
 		return answer
 
 	def gesture_without_tp(self, title):
@@ -189,8 +186,8 @@ class database:
 		# промежуточный формат (new_answer)
 		
 		sql = "SELECT * FROM motions WHERE gesture_id = ? ORDER BY motor_id, timepoint"
-		self.cursor.execute(sql, [(self.get_gesture_id(title))])
-		answer = self.cursor.fetchall()
+		cursor.execute(sql, [(self.get_gesture_id(title))])
+		answer = cursor.fetchall()
 
 		m_tp = [[], [], [], [], [], []]
 		temp = 0
@@ -257,16 +254,16 @@ class database:
 		convert(3)
 		"""
 		sql = "SELECT * FROM conversion WHERE DB = ?"
-		self.cursor.execute(sql, [(db_motor_id)])
-		return self.cursor.fetchone()[2]
+		cursor.execute(sql, [(db_motor_id)])
+		return cursor.fetchone()[2]
 
 	def convert_part(self, part):
 		"""
 		Функция конвертации названия части тела в id необходимого мотора в бд
 		"""
 		sql = "SELECT * FROM conversion WHERE part = ?"
-		self.cursor.execute(sql, [(part)])
-		return self.cursor.fetchone()[0]
+		cursor.execute(sql, [(part)])
+		return cursor.fetchone()[0]
 
 	def get_conversion_info(self, db_motor_id):
 		"""
@@ -278,8 +275,8 @@ class database:
 		(3, 3, 3, 'right hand', 'X')
 		"""
 		sql = "SELECT * FROM conversion WHERE DB = ?"
-		self.cursor.execute(sql, [(db_motor_id)])
-		return self.cursor.fetchone()
+		cursor.execute(sql, [(db_motor_id)])
+		return cursor.fetchone()
 
 	def new_conversion_table(self):
 		"""
@@ -289,9 +286,9 @@ class database:
 		id мотора в БД, id мотора в роботе, часть тела, ось вращения
 		"""
 		sql = "DROP TABLE conversion"
-		self.cursor.execute(sql)
-		self.conn.commit()
-		self.cursor.execute("""CREATE TABLE conversion
+		cursor.execute(sql)
+		conn.commit()
+		cursor.execute("""CREATE TABLE conversion
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
                    DB INTEGER, robot INTEGER, part TEXT, axis TEXT)
                	   """)
@@ -304,8 +301,8 @@ class database:
        			(5, 5, 'head_rotation_euler_X', 'X'), 
        			(6, 6, 'head_rotation_euler_Z', 'Z')]
 
-		self.cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
-		self.conn.commit()
+		cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
+		conn.commit()
 
 	def write_eyes(self, gesture_id, x, y, tp):
 		"""
@@ -316,16 +313,16 @@ class database:
 		sql = """INSERT INTO eyes 
 		(gesture_id, x, y, timepoint) 
 		VALUES (?, ?, ?, ?)"""
-		self.cursor.execute(sql, [(gesture_id), (x), (y), (tp)])
-		self.conn.commit()
+		cursor.execute(sql, [(gesture_id), (x), (y), (tp)])
+		conn.commit()
 
 	def del_eyes(self, gesture_id):
 		"""
 		Удоляет все движения глаз привязанные к определённому id жеста.
 		"""
 		sql = "DELETE FROM eyes WHERE gesture_id = ?"
-		self.cursor.execute(sql, [(gesture_id)])
-		self.conn.commit()
+		cursor.execute(sql, [(gesture_id)])
+		conn.commit()
 
 	def get_eyes(self, gesture_id):
 		"""
@@ -337,35 +334,26 @@ class database:
 		(5, 3, 10.0, 10.0, 69)]
 		"""
 		sql = "SELECT * FROM eyes WHERE gesture_id = ? ORDER BY timepoint"
-		self.cursor.execute(sql, [(gesture_id)])
-		return self.cursor.fetchall()
+		cursor.execute(sql, [(gesture_id)])
+		return cursor.fetchall()
 
 	def eyes(self, title):
 		"""
-		Возвращает информацию по движению глаз по названию жеста.
-		Example:
-		[[80, -0.01006066, -0.1946116], [1200, -0.005579948, -0.1804265], 
-		[2400, -0.01006066, -0.1946116]]
+
 		"""
 		answer = self.get_eyes(self.get_gesture_id(title))
 		data = []
-
-		tp = [0]
-		for i in range(len(answer)):
-			tp.append(answer[i][4])
-
 		for i in range(len(answer)):
 			temp = []
-			temp.append(tp[i]) # Time point
-			temp.append(answer[i][2]) # X
-			temp.append(answer[i][3]) # Y
-			temp.append(tp[i + 1] - tp[i]) # Time
+			temp.append(answer[i][4])
+			temp.append(answer[i][2])
+			temp.append(answer[i][3])
 			data.append(temp)
 		return data
 
-# self.conn = sqlite3.self.connect("database.db")
-# self.cursor = self.conn.self.cursor()
-# database = database()
+conn = sqlite3.connect("database.db")
+cursor = conn.cursor()
+database = database()
 
 ################################################################################
 # конец библиотеки

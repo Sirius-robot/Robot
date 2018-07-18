@@ -55,7 +55,7 @@ while not done:
             x_step = moveeye.x // steps
             y_step = moveeye.y // steps
             time_step = moveeye.time // steps
-            for i in range (1,steps+1):
+            for i in range (steps):
                 print(face.l_pupil.init_bounds.x)
                 print(face.l_pupil.init_bounds.y)
                 print(face.l_pupil.bounds.x)
@@ -73,7 +73,7 @@ while not done:
             x_step = moveeye1.x // steps
             y_step = moveeye1.y // steps
             time_step = moveeye1.time // steps
-            for i in range(1, steps + 1):
+            for i in range(steps):
                 print(face.l_pupil.init_bounds.x)
                 print(face.l_pupil.init_bounds.y)
                 print(face.l_pupil.bounds.x)
