@@ -1,59 +1,56 @@
 from queue import Queue
-import queue, pygame, win32api, win32gui, win32con, game, time
+import queue, pygame, win32api, win32gui, win32con, time
 from threading import Thread
 from pygame.locals import *
 from feature11 import Face
-from DataBase import *
+#from DataBase import *
+##from test_thread import *
+#print(database.eyes('face'))
 
-print(database.eyes('face'))
-
+breakall = False
 waitEvent = True
 que = Queue()
 que_pup = Queue()
 
-#  Load and set up graphics.
-bg = pygame.image.load("../images/background.png")
-mask = pygame.image.load("../images/eye_socket.png")
-pupil_norm = pygame.image.load("../images/pupil.png")
-eyebrows_norm = pygame.image.load("../images/eyebrows.png")
-eyebrows2 = pygame.image.load("../images/eyebrows.png")
-eyebrows_anger = pygame.image.load("../images/eyebrows_anger.png")
-eyebrows_embarrassment = pygame.image.load("../images/eyebrows_embarrassment.png")
-eyebrows_surprise = pygame.image.load("../images/eyebrows/eyebrows_surprise.png")
-mouth_norm = pygame.image.load("../images/mouths/mouth.png")
-mouth2 = pygame.image.load("../images/mouths/mouth.png")
-mouth_anger = pygame.image.load("../images/mouths/mouth_anger.png")
-mouth_embarrassment = pygame.image.load("../images/mouths/mouth_embarrassment.png")
-mouth_boredom = pygame.image.load("../images/mouths/mouth_boredom.png")
-mouth_surprise = pygame.image.load("../images/mouths/mouth_surprise.png")
-
-moveeye = (80,200,300)
-moveeye2 = (200,20,30)
-
-
+#Load and set up graphics.
+#bg = pygame.image.load("../images/background.png")
+#mask = pygame.image.load("../images/eye_socket.png")
+#pupil_norm = pygame.image.load("../images/pupil.png")
+#eyebrows_norm = pygame.image.load("../images/eyebrows.png")
+#eyebrows2 = pygame.image.load("../images/eyebrows.png")
+#eyebrows_anger = pygame.image.load("../images/eyebrows_anger.png")
+#eyebrows_embarrassment = pygame.image.load("../images/eyebrows_embarrassment.png")
+#eyebrows_surprise = pygame.image.load("../images/eyebrows/eyebrows_surprise.png")
+#mouth_norm = pygame.image.load("../images/mouths/mouth.png")
+#mouth2 = pygame.image.load("../images/mouths/mouth.png")
+#mouth_anger = pygame.image.load("../images/mouths/mouth_anger.png")
+#mouth_embarrassment = pygame.image.load("../images/mouths/mouth_embarrassment.png")
+#mouth_boredom = pygame.image.load("../images/mouths/mouth_boredom.png")
+#mouth_surprise = pygame.image.load("../images/mouths/mouth_surprise.png")
 
 def putinqu():
     print("Enter")
     events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png"],
               ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png"],
               ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png"],
-              ["", "../images/mouths/mouth_anger.png"]]
+              ["", "../images/mouths/mouth_anger.png"],
+              [],
+              ["", "../images/mouths/mouth_embarrassment.png"]]
     events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
     print("Start")
     while waitEvent:
-        print("poping in queue")
-        if len(events):
+        #print("poping in queue")
+        if len(events)>0:
             ev_put = events.pop(0)
             que.put(ev_put, block=False)
 
-        if len(events_pupils):
+        if len(events_pupils)>0:
             ev_put_pup = events_pupils.pop(0)
             que_pup.put(ev_put_pup, block=False)
-            time.sleep(1)
+        time.sleep(1)
 
 def movepup():
     pass
-
 
 
 def set_monitors():
@@ -71,16 +68,18 @@ def set_monitors():
                         480, 0)
     return surface
 
-
 def main_pygame():
+    global waitEvent
     global bg, pupil, mask, eyebrows, mouth
     background_cl = (255,255,255)
     pygame.init()
     surface = set_monitors()
 
-    pupil = pupil_norm
-    eyebrows = eyebrows_norm
-    mouth = mouth_norm
+    mask = pygame.image.load("../images/eye_socket.png")
+    bg = pygame.image.load("../images/background.png")
+    pupil = pygame.image.load("../images/pupil.png")
+    eyebrows = pygame.image.load("../images/eyebrows.png")
+    mouth = pygame.image.load("../images/mouths/mouth.png")
 
     face_norm = Face(surface, bg, pupil, mask, eyebrows, mouth)
     face = face_norm
@@ -92,27 +91,24 @@ def main_pygame():
     peiq.start()
 
     mainLoop = True
-    while mainLoop:   #get events from queue and push them into pygame_queue
-        try:
-            print("get from queue")
+    while mainLoop:                #get events from queue and push them into pygame_queue
+        if breakall:
+            waitEvent = False
+            pygame.quit()
+            peiq.join()
+
+        if not que.empty():
             ev_get = que.get()
-            print("got from queue")
-        except queue.Empty:
-            break
+            if len(ev_get)>0:
+                if len(ev_get[0])>0:
+                    face.eyebrows.image = pygame.image.load(ev_get[0])
+                if len(ev_get[1])>0:
+                    face.mouth.image = pygame.image.load(ev_get[1])
+            else:
+                normal_face(face.eyebrows, face.mouth)
 
-        else:
-            if len(ev_get[0]):
-                face.eyebrows.image = pygame.image.load(ev_get[0])
-            if len(ev_get[1]):
-                face.mouth.image = pygame.image.load(ev_get[1])
-        surface.fill(background_cl)
-        pygame.display.update()
-
-        try:
+        if not que_pup.empty():
             ev_get_pup = que_pup.get()
-        except queue.Empty:
-            break
-        else:
             steps = 5
             #events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
             x_step = ev_get_pup[1] // steps
@@ -126,14 +122,18 @@ def main_pygame():
             face.update()
 
         clock.tick(FPS)
-
-        #face = Face(surface, bg, pupil, mask, eyebrows, mouth)
         face.update()
-
-    global waitEvent
     waitEvent = False
     pygame.quit()
     peiq.join()
+
+def break_all():
+    breakall = True
+    return breakall
+
+def normal_face(eyebrows, mouth):
+    eyebrows.image = pygame.image.load("../images/eyebrows.png")
+    mouth.image  = pygame.image.load("../images/mouths/mouth.png")
 
 
 #......

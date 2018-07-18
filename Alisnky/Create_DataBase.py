@@ -16,7 +16,6 @@ cursor.execute("""CREATE TABLE motions
                   angel REAL, timepoint INTEGER)
                """)
 
-
 # Таблица конвертации
 cursor.execute("""CREATE TABLE conversion
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,13 +31,12 @@ mas =  [(1, 1, 'arm_l_rotation_euler_X', 'X'),
         (6, 6, 'head_rotation_euler_Z', 'Z')]
 cursor.executemany("INSERT INTO conversion (DB, robot, part, axis) VALUES (?,?,?,?)", mas)
 
-
-# таблица хранения эмоций (не доделано)
-cursor.execute("""CREATE TABLE emotions
-                  (emotion_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                  title text)
+# таблица движений глаз
+cursor.execute("""CREATE TABLE eyes
+                  (eyes_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                  gesture_id INTEGER, x INTEGER, y INTEGER, timepoint INTEGER)
                """)
 
 conn.commit()
 
-print("Complete!")
+print("Completed!")
