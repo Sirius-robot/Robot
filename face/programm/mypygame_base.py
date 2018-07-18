@@ -4,13 +4,13 @@ from threading import Thread
 from pygame.locals import *
 from feature11 import Face
 #from DataBase import *
-import test_thread
+##from test_thread import *
 #print(database.eyes('face'))
 
-#breakall = False
-#waitEvent = True
-#que = Queue()
-#que_pup = Queue()
+breakall = False
+waitEvent = True
+que = Queue()
+que_pup = Queue()
 
 #Load and set up graphics.
 #bg = pygame.image.load("../images/background.png")
@@ -28,8 +28,30 @@ import test_thread
 #mouth_boredom = pygame.image.load("../images/mouths/mouth_boredom.png")
 #mouth_surprise = pygame.image.load("../images/mouths/mouth_surprise.png")
 
+def putinqu():
+    print("Enter")
+    events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png"],
+              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png"],
+              ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png"],
+              ["", "../images/mouths/mouth_anger.png"],
+              [],
+              ["", "../images/mouths/mouth_embarrassment.png"]]
+    events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
+    print("Start")
+    while waitEvent:
+        #print("poping in queue")
+        if len(events)>0:
+            ev_put = events.pop(0)
+            que.put(ev_put, block=False)
+
+        if len(events_pupils)>0:
+            ev_put_pup = events_pupils.pop(0)
+            que_pup.put(ev_put_pup, block=False)
+        time.sleep(1)
+
 def movepup():
     pass
+
 
 def set_monitors():
     global hwnd
@@ -46,7 +68,8 @@ def set_monitors():
                         480, 0)
     return surface
 
-def main_pygame(que, que_pup, waitEvent):
+def main_pygame():
+    global waitEvent
     global bg, pupil, mask, eyebrows, mouth
     background_cl = (255,255,255)
     pygame.init()
@@ -64,10 +87,16 @@ def main_pygame(que, que_pup, waitEvent):
     clock = pygame.time.Clock()
     FPS = 60
 
-    #peiq = Thread(target=test_thread.putinqu)  #create 3 thread, putting events in queue
-    #peiq.start()
+    peiq = Thread(target=putinqu)  #create 3 thread, putting events in queue
+    peiq.start()
 
-    while waitEvent.is_set():                #get events from queue and push them into pygame_queue
+    mainLoop = True
+    while mainLoop:                #get events from queue and push them into pygame_queue
+        if breakall:
+            waitEvent = False
+            pygame.quit()
+            peiq.join()
+
         if not que.empty():
             ev_get = que.get()
             if len(ev_get)>0:
@@ -91,14 +120,16 @@ def main_pygame(que, que_pup, waitEvent):
                 face.update()
             pygame.time.wait(ev_get_pup[0] % steps)
             face.update()
+
         clock.tick(FPS)
         face.update()
-
+    waitEvent = False
     pygame.quit()
+    peiq.join()
 
-#def break_all(breakall):
-#    breakall.set()
-#    return breakall
+def break_all():
+    breakall = True
+    return breakall
 
 def normal_face(eyebrows, mouth):
     eyebrows.image = pygame.image.load("../images/eyebrows.png")
@@ -106,7 +137,7 @@ def normal_face(eyebrows, mouth):
 
 
 #......
-#ygame_thread = Thread(target=main_pygame)
-#ygame_thread.start()
-#ygame_thread.join()
+pygame_thread = Thread(target=main_pygame)
+pygame_thread.start()
+pygame_thread.join()
 #......

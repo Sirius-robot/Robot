@@ -7,16 +7,15 @@ import Chbh
 import Timer
 sys.path.insert(0, '../Alisnky')
 from DataBase import *
-sys.path.insert(1, '../Sinthesis')
-from sinthesis import *
 sys.path.insert(2, '../recognition')
 from parsing_bml import *
+q = queue.Queue()
 
 def m1():
-    Chbh.master()
+    Chbh.master(q)
 
 def s1():
-    Timer.slaver()
+    Timer.slaver(q)
 
 mastert = threading.Thread(target=m1)
 mastert.start()
