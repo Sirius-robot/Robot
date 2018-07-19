@@ -2,31 +2,10 @@ from queue import Queue
 import queue, pygame, win32api, win32gui, win32con, time
 from threading import Thread
 from pygame.locals import *
-from feature11 import Face
+from feature import Feature
+from face import Face
 #from DataBase import *
-import test_thread
 #print(database.eyes('face'))
-
-#breakall = False
-#waitEvent = True
-#que = Queue()
-#que_pup = Queue()
-
-#Load and set up graphics.
-#bg = pygame.image.load("../images/background.png")
-#mask = pygame.image.load("../images/eye_socket.png")
-#pupil_norm = pygame.image.load("../images/pupil.png")
-#eyebrows_norm = pygame.image.load("../images/eyebrows.png")
-#eyebrows2 = pygame.image.load("../images/eyebrows.png")
-#eyebrows_anger = pygame.image.load("../images/eyebrows_anger.png")
-#eyebrows_embarrassment = pygame.image.load("../images/eyebrows_embarrassment.png")
-#eyebrows_surprise = pygame.image.load("../images/eyebrows/eyebrows_surprise.png")
-#mouth_norm = pygame.image.load("../images/mouths/mouth.png")
-#mouth2 = pygame.image.load("../images/mouths/mouth.png")
-#mouth_anger = pygame.image.load("../images/mouths/mouth_anger.png")
-#mouth_embarrassment = pygame.image.load("../images/mouths/mouth_embarrassment.png")
-#mouth_boredom = pygame.image.load("../images/mouths/mouth_boredom.png")
-#mouth_surprise = pygame.image.load("../images/mouths/mouth_surprise.png")
 
 def movepup():
     pass
@@ -64,9 +43,6 @@ def main_pygame(que, que_pup, waitEvent):
     clock = pygame.time.Clock()
     FPS = 60
 
-    #peiq = Thread(target=test_thread.putinqu)  #create 3 thread, putting events in queue
-    #peiq.start()
-
     while waitEvent.is_set():                #get events from queue and push them into pygame_queue
         if not que.empty():
             ev_get = que.get()
@@ -81,7 +57,6 @@ def main_pygame(que, que_pup, waitEvent):
         if not que_pup.empty():
             ev_get_pup = que_pup.get()
             steps = 5
-            #events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
             x_step = ev_get_pup[1] // steps
             y_step = ev_get_pup[2] // steps
             time_step = ev_get_pup[0] // steps
@@ -104,9 +79,3 @@ def normal_face(eyebrows, mouth):
     eyebrows.image = pygame.image.load("../images/eyebrows.png")
     mouth.image  = pygame.image.load("../images/mouths/mouth.png")
 
-
-#......
-#ygame_thread = Thread(target=main_pygame)
-#ygame_thread.start()
-#ygame_thread.join()
-#......

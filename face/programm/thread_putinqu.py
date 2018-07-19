@@ -2,13 +2,12 @@ from queue import Queue
 import queue, pygame, win32api, win32gui, win32con, time
 from threading import Thread
 from pygame.locals import *
-from feature11 import Face
 def  putinqu(que, que_pup, waitEvent):
     print("Enter")
-    events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png"],
-              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png"],
+    events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png", 200],
+              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 10],
               ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png"],
-              ["", "../images/mouths/mouth_anger.png"],
+              ["", "../images/mouths/mouth_anger.png", 50],
               [],
               ["", "../images/mouths/mouth_embarrassment.png"]]
     events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
