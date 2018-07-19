@@ -83,7 +83,6 @@ while not done:
         #    face.l_pupil.scale(150)
         #    face.r_pupil.scale(150)
         #    face.update()
-
     print(face.l_pupil.bounds)
 
     if speed_x > 0:
