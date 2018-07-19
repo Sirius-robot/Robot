@@ -82,7 +82,7 @@ while not done:
         #    face.update()
         #    pygame.time.wait(1000)
         #    face.l_pupil.scale(150)
-        #    face.r_pupil.scale(150)
+           #face.r_pupil.scale(150)
         #    face.update()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
