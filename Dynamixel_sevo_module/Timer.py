@@ -14,7 +14,7 @@ from parsing_bml import *
 time_iter = -10
 lenni = 0
 
-def slaver(q):
+def th0(th1_to_th0,th0_to_th3_1,th0_to_th3_2):
     
 
 
@@ -26,9 +26,22 @@ def slaver(q):
         return time_iter
 
     def timer1(time_dict):
+
         if time_dict == None:
-            if not q.empty():
-                time_dict = q.get()
+            if not th1_to_th0.empty():
+                big_dict = th1_to_th0.get()
+                if 'img_mouth' in big_dict:
+                    mouth = big_dict['img_mouth']
+                if 'img_brows' in big_dict:
+                    brows = big_dict['img_brows']
+                if 'pupils' in big_dict:
+                    pupils = big_dict['pupils']
+                th0_to_th3_1.put([img_brows, img_mouth, pupils])
+                if 'command_eye' in big_dict:
+                    command_eye = big_dict['command_eye']
+                th0_to_th3_2.put(command_eye)
+                if 'command_motor' in big_dict:
+                    time_dict = big_dict['command_motor']
             threading.Timer(0.04, timer1, args=(time_dict,)).start()
         else:
                 global lenni
