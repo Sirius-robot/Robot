@@ -33,7 +33,7 @@ def main_pygame(que, que_pup, waitEvent):
 
     mask = pygame.image.load("../images/eye_socket.png")
     bg = pygame.image.load("../images/background.png")
-    pupil = pygame.image.load("../images/pupil.png")
+    pupil = pygame.image.load("../images/onepupil.png")
     eyebrows = pygame.image.load("../images/eyebrows.png")
     mouth = pygame.image.load("../images/mouths/mouth.png")
 
@@ -41,31 +41,65 @@ def main_pygame(que, que_pup, waitEvent):
     face = face_norm
 
     clock = pygame.time.Clock()
-    FPS = 60
+    FPS = 25
+
+    target_x = 0
+    target_y = 0
+    speed_x = 0
+    speed_y = 0
+    dif_speed_x = 0
+    dif_speed_y = 0
 
     while waitEvent.is_set():                #get events from queue and push them into pygame_queue
         if not que.empty():
             ev_get = que.get()
-            if len(ev_get)>0:
-                if len(ev_get[0])>0:
+            if len(ev_get):
+                if len(ev_get[0]):
                     face.eyebrows.image = pygame.image.load(ev_get[0])
-                if len(ev_get[1])>0:
+                if len(ev_get[1]):
                     face.mouth.image = pygame.image.load(ev_get[1])
+                if ev_get[2] != 100:
+                    face.l_pupil.scale(ev_get[2])
+                    face.r_pupil.scale(ev_get[2])
             else:
                 normal_face(face.eyebrows, face.mouth)
 
         if not que_pup.empty():
-            ev_get_pup = que_pup.get()
-            steps = 5
-            x_step = ev_get_pup[1] // steps
-            y_step = ev_get_pup[2] // steps
-            time_step = ev_get_pup[0] // steps
-            for i in range(steps):
-                pygame.time.wait(time_step)
-                face.pupil.move(x_step * i, y_step * i)
-                face.update()
-            pygame.time.wait(ev_get_pup[0] % steps)
-            face.update()
+            ev_get_pup = que_pup.get()   #[10000, 50, 50]
+            time, target_x, target_y = ev_get_pup[0], ev_get_pup[1], -ev_get_pup[2]
+            speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
+                    time / 2 * FPS / 1000)
+
+            speed_y = (target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
+                    time / 2 * FPS / 1000)
+
+
+            dif_speed_x = 0
+            dif_speed_y = 0
+
+        if speed_x > 0:
+            if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):
+                speed_x = 0
+
+        elif speed_x < 0:
+            if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) <= target_x):
+                speed_x = 0
+
+        if speed_y > 0:
+            if ((face.l_pupil.bounds.y - face.l_pupil.init_bounds.y) >= target_y):
+                speed_y = 0
+
+        elif speed_y < 0:
+            if ((face.l_pupil.bounds.y - face.l_pupil.init_bounds.y) <= target_y):
+                speed_y = 0
+
+        dif_speed_x += speed_x
+        dif_speed_y += speed_y
+        face.l_pupil.move(int(dif_speed_x), int(dif_speed_y))
+        face.r_pupil.move(int(dif_speed_x), int(dif_speed_y))
+        dif_speed_x -= int(dif_speed_x)
+        dif_speed_y -= int(dif_speed_y)
+
         clock.tick(FPS)
         face.update()
 
@@ -78,4 +112,3 @@ def main_pygame(que, que_pup, waitEvent):
 def normal_face(eyebrows, mouth):
     eyebrows.image = pygame.image.load("../images/eyebrows.png")
     mouth.image  = pygame.image.load("../images/mouths/mouth.png")
-
