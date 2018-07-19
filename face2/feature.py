@@ -13,10 +13,10 @@ class Feature:
     def draw(self, surface):
         surface.blit(self.image, self.bounds)
 
-    def move(self, x, y, time, face):
-        steps = 50 * time * 0.01
-        st = int(steps)
-        x = x - self.i_x
+    #def move(self, x, y, time, face):
+    #    steps = 50 * time * 0.01
+    #    st = int(steps)
+    '''    x = x - self.i_x
         y = y - self.i_y
         x_step = int(x / st)
         y_step = int(y / st)
@@ -31,6 +31,9 @@ class Feature:
             face.update()
         self.i_x = x
         self.i_y = y
+'''
+    def move(self, x, y, speed = None):
+        self.bounds = self.bounds.move(x, y)
 
     def scale(self, percents):
         self.image = pygame.transform.scale(self.image, (int(self.init_bounds.w * 0.01 * percents), int(self.init_bounds.h * 0.01 * percents)))
@@ -64,7 +67,12 @@ class Face:
         self.bg.draw(self.surface)
         self.l_pupil.draw(self.surface)
         self.r_pupil.draw(self.surface)
-        #self.mask.draw(self.surface)
+        self.mask.draw(self.surface)
         self.mouth.draw(self.surface)
         self.eyebrows.draw(self.surface)
+        pygame.display.update()
+
+    def update_pupils(self):
+        self.l_pupil.draw(self.surface)
+        self.r_pupil.draw(self.surface)
         pygame.display.update()
