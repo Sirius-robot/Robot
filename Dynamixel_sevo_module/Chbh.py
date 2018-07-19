@@ -13,7 +13,6 @@ from parsing_bml import *
 
 
 def master(q):
-
     db = database()
     while 1:
         f = open('vvv.bml', 'r')
