@@ -59,4 +59,3 @@ def choose_behavior(th1_to_th0):
         # sinthesis.speech(text)
         #if text =
         time.sleep(5)
-
