@@ -2,8 +2,6 @@ from DataBase import *
 from bs4 import BeautifulSoup
 import os
 
-database = database()
-
 while 1:
 	print("\nWhat do you wanna do?\n")
 	print("1 Write new gesture") 
@@ -42,16 +40,12 @@ while 1:
 
 		gesture_id = database.get_gesture_id(gesture_name)
 
-		error = {'plecho_l_rotation_euler_X': -240.0,
-				 'arm_l_rotation_euler_Y': -150.0,
-				 'plecho_r_rotation_euler_X': -60.0,
-				 'arm_r_rotation_euler_Y': -150.0,
-				 'head_rotation_euler_X': -150.0,
-				 'head_rotation_euler_Z': -150.0}
-
-		x_error = -0.01483
-		y_error = -0.194612
-		k = 55 / 0.035
+		error = {'arm_l_rotation_euler_X': 19.75554 - 200,
+				 'arm_l_rotation_euler_Y': 13.4428 - 150,
+				 'arm_r_rotation_euler_X': -19.61401 - 100,
+				 'arm_r_rotation_euler_Y': 374.7621 - 150,
+				 'head_rotation_euler_X': 0.0 - 150,
+				 'head_rotation_euler_Z': 0.0 - 150}
 
 		for i in range(len(answer1)):
 			ID = answer1[i].attrs['id']
@@ -67,8 +61,8 @@ while 1:
 					temp = str(answer2[j].float_array.string)
 					print(name, "=", temp)
 
-			if ID in ["plecho_l_rotation_euler_X", "arm_l_rotation_euler_Y", 
-					  "plecho_r_rotation_euler_X", "arm_r_rotation_euler_Y", 
+			if ID in ["arm_l_rotation_euler_X", "arm_l_rotation_euler_Y", 
+					  "arm_r_rotation_euler_X", "arm_r_rotation_euler_Y", 
 					  "head_rotation_euler_X", "head_rotation_euler_Z"]:
 				temp = str(answer2[0].float_array.string)
 				tp = [int(round(float(x) * 1000)) for x in temp.split()]
@@ -95,17 +89,13 @@ while 1:
 
 		print("\nEyes data:")
 		for i in range(len(eyes_tp)):
-			final_x = int(round((x[i] - x_error) * k))
-			if final_x > 55: final_x = 55
-			final_y = int(round((y[i] - y_error) * k))
-			if final_y > 55: final_y = 55
-			database.write_eyes(gesture_id, final_x, final_y, eyes_tp[i])
-			print("DB>", gesture_id, final_x, final_y, eyes_tp[i])
+			database.write_eyes(gesture_id, x[i], y[i], eyes_tp[i])
+			print("DB>", gesture_id, x[i], y[i], eyes_tp[i])
 
 		print("\nData of gesture =", database.gesture(gesture_name))
 		print("\nData of eyes =", database.eyes(gesture_name))
 
-		print("\nCompleted!")
+		print("\nComplate!")
 	elif code == 2:
 		print("\nData:")
 		data = database.all_gestures()
@@ -118,14 +108,14 @@ while 1:
 			if database.get_gesture_title(gesture):
 				database.del_gesture(ID, gesture)
 				database.del_eyes(gesture)
-				print("\nCompleted!")
+				print("\nComplate!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 		except ValueError:
 			if database.get_gesture_id(gesture):
 				database.del_gesture(TITLE, gesture)
 				database.del_eyes(database.get_gesture_id(gesture))
-				print("\nCompleted!")
+				print("\nComplate!")
 			else:
 				print("\nSuch gesture doesn't exist!")
 	elif code == 4:

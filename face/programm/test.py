@@ -1,48 +1,56 @@
-from collections import defaultdict
-import pygame, sys
-from pygame.locals import *
-import game
-from eyebrows import *
-from feature import *
-pygame.init()
-surface = pygame.display.set_mode((720,480),0,32)
-(x, y, w, h) = (10,40,300,200)
-bgColor = (0,255,0)
+import pygame
+from pygame.rect import Rect
+class Feature:
+    def __init__(self, x, y, w, h, image):
+        self.init_x = x
+        self.init_y = y
+        self.init_bounds = Rect(x, y, w, h)
+        self.bounds = Rect(x, y, w, h)
+        self.image = image
 
-eyebr = Feature(x, y, w, h, 'eyebrow.png')
-eyebr.draw(surface)
-mainLoop = True
+    def draw(self, surface):
+        surface.blit(self.image, self.bounds)
 
-objests = [eyebr]
+    def move(self, x, y, speed= None):
+        self.bounds = self.bounds.move(x, y)
 
-while mainLoop:
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            mainLoop = False
+    def rotate(self,  degree, speed= None):
+        self.bounds = pygame.transform.rotate(self.bounds, degree)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                eyebr.move(-10, 0)
+    def change(self, x, y, w, h, image):
+        self.bounds = Rect(x, y, w, h)
+        self.image = pygame.image.load(image)
 
-            if event.key == pygame.K_RIGHT:
-                eyebr.move(10, 0)
 
-            if event.key == pygame.K_UP:
-                eyebr.move(0, -10)
+    def changes(self, speed):
+        pass
 
-            if event.key == pygame.K_DOWN:
-                eyebr.move(0, 10)
+    def update(self):
+        if self.speed == [0, 0]:
+            return
 
-            if event.key == pygame.K_v:
-                eyebr.pygame.transform.rotate(10)
-                # vself.br.transform.rotate(10)
+        self.move(*self.speed)
 
-        #elif event.type == pygame.KEYUP:
-        #    for handler in keyup_handlers[event.key]:
-        #        handler(event.key)
-    surface.fill(bgColor)
-    for i in objests:
-        i.draw(surface)
 
-    pygame.display.update()
-pygame.quit()
+
+import pygame
+from pygame.rect import Rect
+from feature import Feature
+class Face:
+    def __init__(self,surface, imgbg,imgpupil,imgmask,imgeyebrows,imgmouth,
+                 pupil_pos = (50,50),mouth_pos = (0,0),eyebrows_pos = (0,0)):
+        self.bg = Feature(0,0,imgbg.get_width(),imgbg.get_height(),imgbg)
+        self.surface = surface
+        self.mask = Feature(0,0,imgmask.get_width(),imgmask.get_height(),imgmask)
+        self.pupil = Feature(pupil_pos[0],pupil_pos[1],imgpupil.get_width(),imgpupil.get_height(),imgpupil)
+        self.mouth = Feature(mouth_pos[0],mouth_pos[1],imgmouth.get_width(),imgmouth.get_height(),imgmouth)
+        self.eyebrows = Feature(eyebrows_pos[0],eyebrows_pos[1],imgeyebrows.get_width(),imgeyebrows.get_height(),imgeyebrows)
+
+
+    def update(self):
+        self.bg.draw(self.surface)
+        self.pupil.draw(self.surface)
+        self.mask.draw(self.surface)
+        self.mouth.draw(self.surface)
+        self.eyebrows.draw(self.surface)
+        pygame.display.update()
