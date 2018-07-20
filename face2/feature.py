@@ -20,9 +20,11 @@ class Feature:
         self.image = image
         self.image = pygame.transform.scale(self.image, (int(self.init_bounds.w * 0.01 * percents), int(self.init_bounds.h * 0.01 * percents)))
 
+
         self.bounds.x = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.bounds.x
         self.bounds.y = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.bounds.y
         print(self.bounds.x ,self.bounds.y )
+
 
 class Face:
     def __init__(self,surface, imgbg,imgpupil,imgmask,imgeyebrows,imgmouth,
