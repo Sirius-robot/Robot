@@ -20,11 +20,11 @@ def speech(text):
 		raise Exception("Cant synthesize speech "+str(response.status_code))
 		
 
-text = "Привет"
+text = "Привет, я акушер"
 audio = speech(text)
 with open(text[:20]+'.wav','wb') as file:
 	file.write(audio)
-winsound.PlaySound(text+'wav', winsound.SND_ASYNC | winsound.SND_ALIAS )
+winsound.PlaySound(text+'.wav', winsound.SND_ASYNC | winsound.SND_ALIAS )
 
 
 
