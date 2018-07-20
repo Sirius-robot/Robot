@@ -42,12 +42,12 @@ while 1:
 
 		gesture_id = database.get_gesture_id(gesture_name)
 
-		error = {'arm_l_rotation_euler_X': 19.75554 - 200,
-				 'arm_l_rotation_euler_Y': 13.4428 - 150,
-				 'arm_r_rotation_euler_X': -19.61401 - 100,
-				 'arm_r_rotation_euler_Y': 374.7621 - 150,
-				 'head_rotation_euler_X': 0.0 - 150,
-				 'head_rotation_euler_Z': 0.0 - 150}
+		error = {'plecho_l_rotation_euler_X': -240.0,
+				 'arm_l_rotation_euler_Y': -150.0,
+				 'plecho_r_rotation_euler_X': -60.0,
+				 'arm_r_rotation_euler_Y': -150.0,
+				 'head_rotation_euler_X': -150.0,
+				 'head_rotation_euler_Z': -150.0}
 
 		x_error = -0.01483
 		y_error = -0.194612
@@ -67,8 +67,8 @@ while 1:
 					temp = str(answer2[j].float_array.string)
 					print(name, "=", temp)
 
-			if ID in ["arm_l_rotation_euler_X", "arm_l_rotation_euler_Y", 
-					  "arm_r_rotation_euler_X", "arm_r_rotation_euler_Y", 
+			if ID in ["plecho_l_rotation_euler_X", "arm_l_rotation_euler_Y", 
+					  "plecho_r_rotation_euler_X", "arm_r_rotation_euler_Y", 
 					  "head_rotation_euler_X", "head_rotation_euler_Z"]:
 				temp = str(answer2[0].float_array.string)
 				tp = [int(round(float(x) * 1000)) for x in temp.split()]

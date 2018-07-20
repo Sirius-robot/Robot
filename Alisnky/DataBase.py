@@ -209,7 +209,10 @@ class database:
 			temp.append(answer[i][1]) 				# motor_id
 			temp.append(answer[i][3]) 				# angel
 			temp.append(m_tp[answer[i][1] - 1][j]) 	# time
-			temp.append(answer[i][4] - temp[2]) 	# time point
+			if answer[i][4] == 0 and temp[2] == 0:
+				temp.append(-2)
+			else:
+				temp.append(answer[i][4] - temp[2]) # time point
 			new_answer.append(temp)
 		new_answer.sort(key=lambda i: i[3]) #преобразованные данные, промежуточный список
 
@@ -305,9 +308,9 @@ class database:
                	   """)
 
 		# данные для конвертации
-		mas =  [(1, 1, 'arm_l_rotation_euler_X', 'X'), 
+		mas =  [(1, 1, 'plecho_l_rotation_euler_X', 'X'), 
 				(2, 2, 'arm_l_rotation_euler_Y', 'Y'),
-       			(3, 3, 'arm_r_rotation_euler_X', 'X'), 
+       			(3, 3, 'plecho_r_rotation_euler_X', 'X'), 
        			(4, 4, 'arm_r_rotation_euler_Y', 'Y'),
        			(5, 5, 'head_rotation_euler_X', 'X'), 
        			(6, 6, 'head_rotation_euler_Z', 'Z')]
