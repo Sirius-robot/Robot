@@ -4,19 +4,19 @@ import sys
 import time
 import queue
 
-sys.path.insert(0, '../Alisnky')
+sys.path.insert(0, 'Alisnky')
 from DataBase import *
 #sys.path.insert(1, '../Sinthesis')
 #from sinthesis import *
-sys.path.insert(2, '../recognition')
+sys.path.insert(2, 'recognition')
 from parsing_bml import *
 
 
-def choose_behavior(th1_to_th0):
+def choose_behavior(chbh_to_timer):
     db = database()
     big_dict = {}
     while 1:
-        f = open('vvv.bml', 'r')
+        f = open('bml/vvv.bml', 'r')
         z = f.read()
         x = dictionary_result(z)
         gestur = x['figure'] 	
@@ -50,7 +50,7 @@ def choose_behavior(th1_to_th0):
             big_dict['img_brows'] = brows
         if len(pupils) > 0:
             big_dict['pupils'] = pupils
-        th1_to_th0.put(big_dict)
+        chbh_to_timer.put(big_dict)
         if len(texts) > 0:
             if len(texts[0])>0:
                 print(texts[0])
@@ -59,4 +59,3 @@ def choose_behavior(th1_to_th0):
         # sinthesis.speech(text)
         #if text =
         time.sleep(5)
-

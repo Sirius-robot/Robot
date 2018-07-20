@@ -68,6 +68,11 @@ while not done:
                         moveeye.time / 2 * FPS / 1000)
             dif_speed_x = 0
             dif_speed_y = 0
+<<<<<<< HEAD
+=======
+            print(face.l_pupil.bounds.x)
+            print(face.l_pupil.bounds.y)
+>>>>>>> 92babfa74e19e791f7284b805eabaed62f63ed50
 
     if speed_x > 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):

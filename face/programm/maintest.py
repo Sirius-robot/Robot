@@ -7,7 +7,7 @@ from feature import Feature
 from face import Face
 
 waitEvent = Event()
-waitEvent.set()         #waitEvent.isSet() return True
+waitEvent.set()     #waitEvent.isSet() return True
 
 que = Queue()       #   queue for images. На вход подается список из двух строк.
                     #    1 строка - имя файла для новых бровей
@@ -18,14 +18,21 @@ que = Queue()       #   queue for images. На вход подается спи�
 
 que_pup = Queue()   #    список из конечных координат и времени за которое надо прийти в точку.
 
-pygame_thread_mypygame= Thread(target=thread_event_handling.main_pygame, args = (que, que_pup, waitEvent))
-pygame_thread_mypygame.start()
 
-pygame_thread_putinqu = Thread(target=thread_putinqu.putinqu, args = (que, que_pup, waitEvent))
-pygame_thread_putinqu.start()
 try:
+    pygame_thread_mypygame = Thread(target=thread_event_handling.main_pygame, args=(que, que_pup, waitEvent))
+    pygame_thread_mypygame.daemon = True
+    pygame_thread_mypygame.start()
+
+    pygame_thread_putinqu = Thread(target=thread_putinqu.putinqu, args=(que, que_pup, waitEvent))
+    pygame_thread_putinqu.daemon = True
+    pygame_thread_putinqu.start()
+    while True:
+        time.sleep(100)
+
+
+except (KeyboardInterrupt, SystemExit):
+    print('ok')
+    waitEvent.clear()
     pygame_thread_putinqu.join()
     pygame_thread_mypygame.join()
-
-except KeyboardInterrupt:
-    waitEvent.clear()
