@@ -37,7 +37,7 @@ mouth_embarrassment = pygame.image.load("Images/mouths/mouth_embarrassment.png")
 mouth_boredom = pygame.image.load("Images/mouths/mouth_boredom.png")
 mouth_surprise = pygame.image.load("Images/mouths/mouth_surprise.png")
 
-moveeye = pygame.event.Event(pygame.USEREVENT + 1, time=10000, x=50, y=50)
+moveeye = pygame.event.Event(pygame.USEREVENT + 1, time=10000, x=-50, y=-50)
 # moveeye1 = pygame.event.Event(pygame.USEREVENT+1, time = 1000, x = 20, y = -20)
 pygame.event.post(moveeye)
 # pygame.event.post(moveeye1)
@@ -59,52 +59,29 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         elif event == moveeye:
+            face.l_pupil.scale(150, pupil)
+            face.r_pupil.scale(150, pupil)
+            face.update()
+            pygame.time.wait(1000)
+            face.l_pupil.scale(30, pupil)
+            face.r_pupil.scale(30, pupil)
+            face.update()
+            pygame.time.wait(1000)
+            face.l_pupil.scale(150, pupil)
+            face.r_pupil.scale(150, pupil)
+            face.update()
+            pygame.time.wait(1000)
             target_x = moveeye.x
-            target_y = moveeye.y
-            speed_x = abs(target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
-                        moveeye.time / 2 * FPS / 1000) * (abs(target_x) / target_x)
+            target_y = -moveeye.y
+            speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
+                        moveeye.time / 2 * FPS / 1000)
             print(speed_x)
-            speed_y = abs(target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
-                        moveeye.time / 2 * FPS / 1000) * (abs(target_y) / target_y)
+            speed_y = (target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
+                        moveeye.time / 2 * FPS / 1000)
             dif_speed_x = 0
             dif_speed_y = 0
-            #    face.l_pupil.move(moveeye.x, moveeye.y, moveeye.time, face)
-            #   face.r_pupil.move(moveeye.x, moveeye.y, moveeye.time, face)
-            #   face.update()
-            #   print(face.l_pupil.init_bounds.x)
-            #   print(face.l_pupil.init_bounds.y)
             print(face.l_pupil.bounds.x)
             print(face.l_pupil.bounds.y)
-        #    face.update()
-        # elif event == moveeye1:
-        #    face.l_pupil.move(moveeye1.x, moveeye1.y, moveeye1.time, face)
-        #    face.r_pupil.move(moveeye1.x, moveeye1.y, moveeye1.time, face)
-        #    face.update()
-        #    pygame.time.wait(1000)
-        #    face.l_pupil.scale(150)
-           #face.r_pupil.scale(150)
-        #    face.update()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_q:
-                eyebrows = pygame.transform.rotate(eyebrows2, 0)
-            elif event.key == pygame.K_w:
-                eyebrows = pygame.transform.rotate(eyebrows_anger, 0)
-            elif event.key == pygame.K_e:
-                eyebrows = pygame.transform.rotate(eyebrows_embarrassment, 0)
-            elif event.key == pygame.K_r:
-                eyebrows = pygame.transform.rotate(eyebrows_surprise, 0)
-            elif event.key == pygame.K_a:
-                mouth = pygame.transform.rotate(mouth2, 0)
-            elif event.key == pygame.K_s:
-                mouth = pygame.transform.rotate(mouth_anger, 0)
-            elif event.key == pygame.K_d:
-                mouth = pygame.transform.rotate(mouth_embarrassment, 0)
-            elif event.key == pygame.K_f:
-                mouth = pygame.transform.rotate(mouth_boredom, 0)
-            elif event.key == pygame.K_g:
-                mouth = pygame.transform.rotate(mouth_surprise, 0)
-    print(face.l_pupil.bounds)
-
     if speed_x > 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):
             print("Stop x")
@@ -128,6 +105,7 @@ while not done:
     face.r_pupil.move(int(dif_speed_x), int(dif_speed_y))
     dif_speed_x -= int(dif_speed_x)
     dif_speed_y -= int(dif_speed_y)
+
     face.update()
     clock.tick(FPS)
 

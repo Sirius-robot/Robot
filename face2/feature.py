@@ -35,25 +35,17 @@ class Feature:
     def move(self, x, y, speed = None):
         self.bounds = self.bounds.move(x, y)
 
-    def scale(self, percents):
+    def scale(self, percents, image):
+        self.image = image
         self.image = pygame.transform.scale(self.image, (int(self.init_bounds.w * 0.01 * percents), int(self.init_bounds.h * 0.01 * percents)))
-        self.bounds.x = self.bounds.x + (self.init_bounds.w - (self.init_bounds.w * 0.01 * percents))/2
-        self.bounds.y = self.bounds.y + (self.init_bounds.w - (self.init_bounds.w * 0.01 * percents))/2
+        self.bounds.x = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.x
+        self.bounds.y = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.y
+        print(self.bounds.x ,self.bounds.y )
 
-
-'''
-    def update(surface,bg , pupil, mask, eyebrows, mouth):
-        self.bg.draw(self.surface)
-        self.l_pupil.draw(self.surface)
-        # self.mask.draw(self.surface)
-        self.mouth.draw(self.surface)
-        self.eyebrows.draw(self.surface)
-        pygame.display.update()
-'''
 
 class Face:
     def __init__(self,surface, imgbg,imgpupil,imgmask,imgeyebrows,imgmouth,
-                 l_pupil_pos = (120,135),r_pupil_pos = (520,135),mouth_pos = (0,0),eyebrows_pos = (0,0)):
+                 l_pupil_pos = (120,135),r_pupil_pos = (545,135),mouth_pos = (0,0),eyebrows_pos = (0,0)):
         self.bg = Feature(0,0,imgbg.get_width(),imgbg.get_height(),imgbg)
         self.surface = surface
         self.mask = Feature(0,0,imgmask.get_width(),imgmask.get_height(),imgmask)
@@ -67,7 +59,7 @@ class Face:
         self.bg.draw(self.surface)
         self.l_pupil.draw(self.surface)
         self.r_pupil.draw(self.surface)
-        self.mask.draw(self.surface)
+        #self.mask.draw(self.surface)
         self.mouth.draw(self.surface)
         self.eyebrows.draw(self.surface)
         pygame.display.update()
