@@ -13,35 +13,21 @@ class Feature:
     def draw(self, surface):
         surface.blit(self.image, self.bounds)
 
-    #def move(self, x, y, time, face):
-    #    steps = 50 * time * 0.01
-    #    st = int(steps)
-    '''    x = x - self.i_x
-        y = y - self.i_y
-        x_step = int(x / st)
-        y_step = int(y / st)
-        time_step = int(time / st)
-        for i in range(st):
-            self.bounds.x = self.bounds.x + x_step
-            pygame.display.update(self.bounds)
-            self.bounds.y = self.bounds.y + -y_step
-            pygame.display.update(self.bounds)
-            pygame.time.wait(time_step)
-            print(self.bounds.x, self.bounds.y,time_step)
-            face.update()
-        self.i_x = x
-        self.i_y = y
-'''
     def move(self, x, y, speed = None):
         self.bounds = self.bounds.move(x, y)
 
     def scale(self, percents, image):
         self.image = image
         self.image = pygame.transform.scale(self.image, (int(self.init_bounds.w * 0.01 * percents), int(self.init_bounds.h * 0.01 * percents)))
+<<<<<<< HEAD
         self.bounds.x = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.x
         self.bounds.y = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.y
         print(self.bounds.x ,self.bounds.y )
 
+=======
+        self.bounds.x = self.bounds.x + (self.init_bounds.w - (self.init_bounds.w * 0.01 * percents))/2
+        self.bounds.y = self.bounds.y + (self.init_bounds.w - (self.init_bounds.w * 0.01 * percents))/2
+>>>>>>> 4bd6cb85994da23145963c77d3a767d4fc8b988e
 
 class Face:
     def __init__(self,surface, imgbg,imgpupil,imgmask,imgeyebrows,imgmouth,

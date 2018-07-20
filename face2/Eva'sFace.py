@@ -1,4 +1,3 @@
-# Hi
 import pygame
 import win32gui, win32api, win32con
 
@@ -82,6 +81,20 @@ while not done:
             dif_speed_y = 0
             print(face.l_pupil.bounds.x)
             print(face.l_pupil.bounds.y)
+<<<<<<< HEAD
+=======
+        #    face.update()
+        # elif event == moveeye1:
+        #    face.l_pupil.move(moveeye1.x, moveeye1.y, moveeye1.time, face)
+        #    face.r_pupil.move(moveeye1.x, moveeye1.y, moveeye1.time, face)
+        #    face.update()
+        #    pygame.time.wait(1000)
+        #    face.l_pupil.scale(150)
+        #    face.r_pupil.scale(150)
+        #    face.update()
+    print(face.l_pupil.bounds)
+
+>>>>>>> 4bd6cb85994da23145963c77d3a767d4fc8b988e
     if speed_x > 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):
             print("Stop x")

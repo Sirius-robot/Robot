@@ -3,14 +3,13 @@ import queue, pygame, win32api, win32gui, win32con, time
 from threading import Thread
 from pygame.locals import *
 def  putinqu(que, que_pup, waitEvent):
-    print("Enter")
-    events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png", 200],
-              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 10],
-              ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png"],
-              ["", "../images/mouths/mouth_anger.png", 50],
+    events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png", 100],
+              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 30],
+              ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png", 100],
+              ["", "../images/mouths/mouth_anger.png", 100],
               [],
-              ["", "../images/mouths/mouth_embarrassment.png"]]
-    events_pupils = [[80,200,300],[200,20,30],[80,200,300]]
+              ["", "../images/mouths/mouth_embarrassment.png", 100]]
+    events_pupils = [[10000, 50, 50],[1000, 20, -20],[500,25,30]]
     print("Start")
     while waitEvent:
         #print("poping in queue")

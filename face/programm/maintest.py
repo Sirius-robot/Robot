@@ -14,7 +14,7 @@ que = Queue()       #   queue for images. На вход подается спи�
                     #    2 строка - имя файла для новой улыбки
                     #    если 1 строка пустая, то изображение для бровей не меняется. аналогично с улыбкой
                     #    иф пустой список, то лицо приходит в нормальное состояние,
-#                        Рразмер зрачка
+                    #     Рразмер зрачка
 
 que_pup = Queue()   #    список из конечных координат и времени за которое надо прийти в точку.
 
@@ -23,11 +23,9 @@ pygame_thread_mypygame.start()
 
 pygame_thread_putinqu = Thread(target=thread_putinqu.putinqu, args = (que, que_pup, waitEvent))
 pygame_thread_putinqu.start()
-print("before join")
 try:
     pygame_thread_putinqu.join()
     pygame_thread_mypygame.join()
+
 except KeyboardInterrupt:
-    print("interrupt")
     waitEvent.clear()
-print("after join")
