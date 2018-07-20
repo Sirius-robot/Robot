@@ -9,7 +9,7 @@ else:
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
 config = configparser.ConfigParser()
-config.read("../settings.ini")
+config.read("settings.ini")
 ADDR_MX_GOAL_SPEED          = 32
 ADDR_MX_TORQUE_ENABLE       = 24
 ADDR_MX_GOAL_POSITION       = 30
