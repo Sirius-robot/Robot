@@ -36,7 +36,7 @@ mouth_embarrassment = pygame.image.load("Images/mouths/mouth_embarrassment.png")
 mouth_boredom = pygame.image.load("Images/mouths/mouth_boredom.png")
 mouth_surprise = pygame.image.load("Images/mouths/mouth_surprise.png")
 
-moveeye = pygame.event.Event(pygame.USEREVENT + 1, time=10000, x=-50, y=-50)
+moveeye = pygame.event.Event(pygame.USEREVENT + 1, time=0, x=-50, y=-50)
 # moveeye1 = pygame.event.Event(pygame.USEREVENT+1, time = 1000, x = 20, y = -20)
 pygame.event.post(moveeye)
 # pygame.event.post(moveeye1)
@@ -44,7 +44,7 @@ pygame.event.post(moveeye)
 done = False
 
 clock = pygame.time.Clock()
-FPS = 25
+FPS = 50
 
 target_x = 0
 target_y = 0
@@ -60,19 +60,21 @@ while not done:
         elif event == moveeye:
 
             target_x = moveeye.x
+            if moveeye.time < 20:
+                moveeye.time = 20
             target_y = -moveeye.y
             speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
-                        moveeye.time / 2 * FPS / 1000)
+                        moveeye.time * FPS / 1000)
             print(speed_x)
             speed_y = (target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
-                        moveeye.time / 2 * FPS / 1000)
+                        moveeye.time * FPS / 1000)
+            print(speed_y)
+
             dif_speed_x = 0
             dif_speed_y = 0
-<<<<<<< HEAD
-=======
-            print(face.l_pupil.bounds.x)
-            print(face.l_pupil.bounds.y)
->>>>>>> 92babfa74e19e791f7284b805eabaed62f63ed50
+
+
+
 
     if speed_x > 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):
@@ -83,6 +85,7 @@ while not done:
             print("Stop x")
 
             speed_x = 0
+
 
     if speed_y > 0:
         if ((face.l_pupil.bounds.y - face.l_pupil.init_bounds.y) >= target_y):
