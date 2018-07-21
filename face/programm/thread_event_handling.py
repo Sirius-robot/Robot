@@ -41,7 +41,7 @@ def main_pygame(que, que_pup, waitEvent):
     face = face_norm
 
     clock = pygame.time.Clock()
-    FPS = 25
+    FPS = 50
 
     target_x = 0
     target_y = 0
@@ -59,19 +59,21 @@ def main_pygame(que, que_pup, waitEvent):
                 if len(ev_get[1]):
                     face.mouth.image = pygame.image.load(ev_get[1])
                 if ev_get[2] != 100:
-                    face.l_pupil.scale(ev_get[2])
-                    face.r_pupil.scale(ev_get[2])
+                    face.l_pupil.scale(ev_get[2], pupil)
+                    face.r_pupil.scale(ev_get[2], pupil)
             else:
-                normal_face(face.eyebrows, face.mouth)
+                normal_face(face.eyebrows, face.mouth, face.l_pupil, face.r_pupil)
 
         if not que_pup.empty():
             ev_get_pup = que_pup.get()   #[10000, 50, 50]
             time, target_x, target_y = ev_get_pup[0], ev_get_pup[1], -ev_get_pup[2]
-            speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
-                    time / 2 * FPS / 1000)
+            if time < 20:
+                time = 20
 
+            speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
+                    time * FPS / 1000)
             speed_y = (target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
-                    time / 2 * FPS / 1000)
+                    time * FPS / 1000)
 
 
             dif_speed_x = 0
@@ -109,6 +111,15 @@ def main_pygame(que, que_pup, waitEvent):
 #    breakall.set()
 #    return breakall
 
-def normal_face(eyebrows, mouth):
+def normal_face(eyebrows, mouth, l_pupil, r_pupil):
     eyebrows.image = pygame.image.load("../images/eyebrows.png")
     mouth.image  = pygame.image.load("../images/mouths/mouth.png")
+    l_pupil.image = pygame.image.load("../images/onepupil.png")
+    r_pupil.image = pygame.image.load("../images/onepupil.png")
+    l_pupil.bounds.x += l_pupil.bounds.w * (l_pupil.percents2 - 100) / 100 / 2
+    l_pupil.bounds.y += l_pupil.bounds.h * (l_pupil.percents2 - 100) / 100 / 2
+
+    r_pupil.bounds.x += r_pupil.bounds.w * (r_pupil.percents2 - 100) / 100 / 2
+    r_pupil.bounds.y += r_pupil.bounds.h * (r_pupil.percents2 - 100) / 100 / 2
+
+
