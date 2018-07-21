@@ -3,7 +3,7 @@ import threading
 import sys
 import time
 import queue
-
+import os
 sys.path.insert(0, 'Alisnky')
 from DataBase import *
 #sys.path.insert(1, '../Sinthesis')
@@ -12,11 +12,12 @@ sys.path.insert(2, 'recognition')
 from parsing_bml import *
 
 
-def choose_behavior(chbh_to_timer):
+def choose_behavior(chbh_to_timer,event):
     db = database()
     big_dict = {}
     while 1:
-        f = open('bml/vvv.bml', 'r')
+        bml = input('write bml name ')
+        f = open(os.path.join('Bml', bml+".bml"), 'r')
         z = f.read()
         x = dictionary_result(z)
         gestur = x['figure'] 	
@@ -41,7 +42,23 @@ def choose_behavior(chbh_to_timer):
                         dif_times.append(command[2])
                         time_dict[timew] = [ids, angles, dif_times]  
                 big_dict['command_motor'] = time_dict
-                big_dict['command_eye'] = eye_data
+            if len(eye_data):
+                time_pointz=[]
+                cordx=[]
+                cordy=[]
+                delta_time=[]
+                for i in eye_data:
+                    time_pointz.append(i[0])
+                    cordx.append(i[1])
+                    cordy.append(i[2])
+                    delta_time.append(i[3])
+                print('TIME')
+                print(time_pointz)
+                print(cordx)
+                print(cordy)
+                print(delta_time)
+                comeyez={'time_points':time_pointz,'cordx':cordx,'cordy':cordy,'delta_time':delta_time}
+                big_dict['command_eye'] = comeyez
         if len(texts) > 0:
             big_dict['speech'] = texts
         if len(mouth) > 0:
@@ -57,5 +74,4 @@ def choose_behavior(chbh_to_timer):
                 #audio = speech(texts[0])
                 #winsound.PlaySound(audio, winsound.SND_MEMORY)
         # sinthesis.speech(text)
-        #if text =
-        time.sleep(5)
+        event.wait()

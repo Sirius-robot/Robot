@@ -5,11 +5,12 @@ if os.name == 'nt':
     import msvcrt
 else:
     import sys, tty, termios
-
     fd = sys.stdin.fileno()
     old_settings = termios.tcgetattr(fd)
+
 config = configparser.ConfigParser()
 config.read("settings.ini")
+
 ADDR_MX_GOAL_SPEED          = 32
 ADDR_MX_TORQUE_ENABLE       = 24
 ADDR_MX_GOAL_POSITION       = 30
@@ -27,6 +28,7 @@ DXL_MAXIMUM_POSITION_VALUE  = 1023
 
 portHandler = PortHandler(DEVICENAME)
 packetHandler = PacketHandler(PROTOCOL_VERSION)
+groupBulkRead = GroupBulkRead(portHandler, packetHandler)
 
 def init(ID):
     if portHandler.openPort():
@@ -74,8 +76,9 @@ def stop(ID):
     portHandler.closePort()
 
 def read(ID):
+
     dxl_present_position, dxl_comm_result, dxl_error = packetHandler.read2ByteTxRx(portHandler, ID, 36)
     if dxl_comm_result != COMM_SUCCESS:
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
-         raise Exception("Something went wrong")
+         raise Exception("Something went wrong ", dxl_error)
     return dxl_present_position

@@ -3,7 +3,7 @@ import configparser
 
 import winsound
 config = configparser.ConfigParser()
-config.read("../settings.ini")
+config.read("settings.ini")
 key = config.get("Settings", "API_KEY")
 
 def speech(text):
@@ -18,6 +18,7 @@ def speech(text):
 		return response.content
 	else:
 		raise Exception("Cant synthesize speech "+str(response.status_code))
+
 
 
 
