@@ -21,6 +21,7 @@ class Feature:
     def scale(self, percents, image):
 
         self.image = image
+
         self.image = pygame.transform.smoothscale(self.image, (int(self.init_bounds.w * 0.01 * percents),
                                                                int(self.init_bounds.h * 0.01 * percents)))
 
