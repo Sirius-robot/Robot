@@ -68,8 +68,11 @@ while not done:
                         moveeye.time / 2 * FPS / 1000)
             dif_speed_x = 0
             dif_speed_y = 0
+<<<<<<< HEAD
+=======
             print(face.l_pupil.bounds.x)
             print(face.l_pupil.bounds.y)
+>>>>>>> 92babfa74e19e791f7284b805eabaed62f63ed50
 
     if speed_x > 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) >= target_x):
@@ -78,24 +81,27 @@ while not done:
     elif speed_x < 0:
         if ((face.l_pupil.bounds.x - face.l_pupil.init_bounds.x) <= target_x):
             print("Stop x")
-            face.l_pupil.scale(150, pupil)
-            face.r_pupil.scale(150, pupil)
-            face.update()
-            pygame.time.wait(1000)
-            face.l_pupil.scale(30, pupil)
-            face.r_pupil.scale(30, pupil)
-            face.update()
-            pygame.time.wait(1000)
-            face.l_pupil.scale(150, pupil)
-            face.r_pupil.scale(150, pupil)
-            face.update()
-            pygame.time.wait(1000)
+
             speed_x = 0
 
     if speed_y > 0:
         if ((face.l_pupil.bounds.y - face.l_pupil.init_bounds.y) >= target_y):
             print("Stop y")
             speed_y = 0
+            print(face.l_pupil.bounds.x)
+            print(face.l_pupil.bounds.y)
+            face.l_pupil.scale(150, pupil, face)
+            face.r_pupil.scale(150, pupil, face)
+            face.update()
+            pygame.time.wait(1000)
+            face.l_pupil.scale(30, pupil, face)
+            face.r_pupil.scale(30, pupil, face)
+            face.update()
+            pygame.time.wait(1000)
+            face.l_pupil.scale(150, pupil, face)
+            face.r_pupil.scale(150, pupil, face)
+            face.update()
+            pygame.time.wait(1000)
     elif speed_y < 0:
         if ((face.l_pupil.bounds.y - face.l_pupil.init_bounds.y) <= target_y):
             print("Stop y")

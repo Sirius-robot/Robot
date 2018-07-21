@@ -6,9 +6,11 @@ class Feature:
         self.init_y = y
         self.i_x = 0
         self.i_y = 0
+        self.p = 0
         self.init_bounds = Rect(x, y, w, h)
         self.bounds = Rect(x, y, w, h)
         self.image = image
+        self.percents2 = 100
 
     def draw(self, surface):
         surface.blit(self.image, self.bounds)
@@ -16,14 +18,29 @@ class Feature:
     def move(self, x, y, speed = None):
         self.bounds = self.bounds.move(x, y)
 
-    def scale(self, percents, image):
+    def scale(self, percents, image, face):
+
         self.image = image
         self.image = pygame.transform.smoothscale(self.image, (int(self.init_bounds.w * 0.01 * percents), int(self.init_bounds.h * 0.01 * percents)))
+<<<<<<< HEAD
+        pygame.time.wait(1000)
+        # self.bounds.x = (self.init_bounds.w - (self.bounds.w ))/2 + self.bounds.x
+        # self.bounds.y = (self.init_bounds.h - (self.bounds.h ))/2 + self.bounds.y
+        print("W =", self.init_bounds.w)
+        print("H =", self.init_bounds.h)
+        self.bounds.x += self.bounds.w * (self.percents2 - percents)/ 100 / 2
+        self.bounds.y += self.bounds.h * (self.percents2 - percents) / 100 / 2
+        self.percents2 = percents
+
+        #print(self.bounds.x ,self.bounds.y )
+
+=======
 
 
         self.bounds.x = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.x
         self.bounds.y = (self.bounds.w - (self.bounds.w * 0.01 * percents))/2 + self.init_bounds.y
         print(self.bounds.x ,self.bounds.y )
+>>>>>>> 92babfa74e19e791f7284b805eabaed62f63ed50
 
 
 class Face:
