@@ -1,7 +1,7 @@
 <bml>
     <figure name="test"/>
-    <mouth img="img"/>
-    <brows img="img"/>
+    <mouth img="mouth.png"/>
+    <brows img="eyebrows.png"/>
     <speech></speech>
     <pupils percent="100"/>
 </bml>

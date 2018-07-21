@@ -36,10 +36,11 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos):
                     brows = big_dict['img_brows']
                 if 'pupils' in big_dict:
                     pupils = big_dict['pupils']
-                timer_to_images.put([brows, mouth, pupils])
+                timer_to_images.put([brows[0], mouth[0], int(pupils[0])])
                 if 'command_eye' in big_dict:
                     command_eye = big_dict['command_eye']
-                timer_to_eyepos.put(command_eye)
+
+
                 if 'command_motor' in big_dict:
                     time_dict = big_dict['command_motor']
             threading.Timer(0.04, timer1, args=(time_dict,)).start()
@@ -53,6 +54,7 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos):
                 threading.Timer(0.04, timer1, args=(time_dict,)).start()
                 d = work()
                 if time_dict != None:
+                        if command_eye.get(d, 666) != 666:
                         if time_dict.get(d, 666) != 666:
                             lenni = lenni + 1
                             data = time_dict[d]
