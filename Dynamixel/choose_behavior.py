@@ -28,21 +28,23 @@ def choose_behavior(chbh_to_timer,event):
         if len(gestur) > 0:
             if len(gestur[0]) > 0:
                 command_data = db.gesture(gestur[0])
-                eye_data = db.eyes(gestur[0])
-                time_dict = {}
-                for commands_time in command_data:
-                    timew = commands_time[0]
-                    commands = commands_time[1]
-                    ids = []
-                    angles = []
-                    dif_times = []
-                    for command in commands:
-                        ids.append(command[0])
-                        angles.append(command[1])
-                        dif_times.append(command[2])
-                        time_dict[timew] = [ids, angles, dif_times]  
-                big_dict['command_motor'] = time_dict
-                big_dict['command_eye'] = eye_data
+                if len(command_data) > 0:
+                    time_dict = {}
+                    for commands_time in command_data:
+                        timew = commands_time[0]
+                        commands = commands_time[1]
+                        ids = []
+                        angles = []
+                        dif_times = []
+                        for command in commands:
+                            ids.append(command[0])
+                            angles.append(command[1])
+                            dif_times.append(command[2])
+                            time_dict[timew] = [ids, angles, dif_times]
+                    big_dict['command_motor'] = time_dict
+                eye_data = db.eyes(gestur[0]) 
+                if len(eye_data) > 0:
+                    big_dict['command_eye'] = eye_data
         if len(texts) > 0:
             big_dict['speech'] = texts
         if len(mouth) > 0:
@@ -59,3 +61,4 @@ def choose_behavior(chbh_to_timer,event):
                 #winsound.PlaySound(audio, winsound.SND_MEMORY)
         # sinthesis.speech(text)
         event.wait()
+        event.clear()
