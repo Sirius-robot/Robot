@@ -26,6 +26,7 @@ def choose_behavior(chbh_to_timer,eventio,bh_end):
         mouth = x['mouth']
         brows = x['brows']
         pupils = x['pupils']
+
         if len(gestur) > 0:
             if len(gestur[0]) > 0:
                 command_data = db.gesture(gestur[0])
@@ -43,7 +44,15 @@ def choose_behavior(chbh_to_timer,eventio,bh_end):
                         dif_times.append(command[2])
                         time_dict[timew] = [ids, angles, dif_times]  
                 big_dict['command_motor'] = time_dict
-                big_dict['command_eye'] = eye_data
+            pupils_time_pointz_dictionary = {}
+            for i in eye_data:
+              if i[-1] == 0:
+                pupils_time_pointz_dictionary[-2] = i[1:4]
+              else:    
+                pupils_time_pointz_dictionary[i[0]] = i[1:4]
+
+        if len(pupils_time_pointz_dictionary) > 0:
+            big_dict['command_eye'] = pupils_time_pointz_dictionary
         if len(texts) > 0:
             big_dict['speech'] = texts
         if len(mouth) > 0:
