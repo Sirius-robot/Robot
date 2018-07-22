@@ -3,6 +3,8 @@ import threading
 import sys
 import time
 import queue
+import wave
+import contextlib
 from collections import defaultdict
 sys.path.insert(3, 'Dynamixel_sevo_module')
 #from servocontrol import *
@@ -58,7 +60,16 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end):
                 if 'command_eye' in big_dict:
                     command_eye = big_dict['command_eye']
                    
-
+                if 'speech' in big_dict:
+                    speech = big_dict['speech']
+                    with contextlib.closing(wave.open(speech,'r')) as f:
+                        frames = f.getnframes()
+                        rate = f.getframerate()
+                        duration = frames / float(rate)
+                        print(duration)
+                        dur = duration * 1000
+                        if dur > max_time_val:
+                            max_time_val = dur
 
                     '''
                 if 'command_motor' in big_dict:

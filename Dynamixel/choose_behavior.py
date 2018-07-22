@@ -6,6 +6,7 @@ import sys
 import time
 import queue
 import os
+
 sys.path.insert(0, 'Alisnky')
 from DataBase import *
 sys.path.insert(1, 'Sinthesis')
@@ -37,9 +38,9 @@ def choose_behavior(chbh_to_timer,eventio,bh_end):
         pupils = x['pupils']
         file_name = None
         if texts != ['']:
-            textz = speech(texts[0])
             file_name = (texts[0]+'.wav')
             if os.path.isfile(file_name) == False:
+                textz = speech(texts[0])
                 with open(file_name, 'wb') as file:
                     file.write(textz)
         if len(gestur) > 0:
