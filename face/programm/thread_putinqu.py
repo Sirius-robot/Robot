@@ -7,8 +7,8 @@ def  putinqu(que, que_pup, waitEvent):
               ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 30],
               ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png", 100],
               ["", "../images/mouths/mouth_anger.png", 100],
-              [],
-              ["", "../images/mouths/mouth_embarrassment.png", 100]]
+              []]
+              #["", "../images/mouths/mouth_embarrassment.png", 100]]
     events_pupils = [[10000, 50, 50],[1000, 20, -20],[500,25,30]]
     print("Start")
     while waitEvent:
@@ -20,4 +20,4 @@ def  putinqu(que, que_pup, waitEvent):
         if len(events_pupils):
             ev_put_pup = events_pupils.pop(0)
             que_pup.put(ev_put_pup, block=False)
-        time.sleep(1)
+        time.sleep(10)
