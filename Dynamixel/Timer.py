@@ -25,48 +25,59 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
         global time_iter
         time_iter += 10
         return time_iter
-    def timer1(time_dict):
+    def timer1(time_dict_motors, time_dict_command_eye):
         global time_iter
         global max_time_val
         global anglea
         global datauy
-        if time_dict == None:
+        if time_dict_motors == None and time_dict_command_eye==None:
             if not chbh_to_timer.empty():
                 big_dict = chbh_to_timer.get()
                 if 'img_mouth' in big_dict:
                     mouth = big_dict['img_mouth']
+                else:
+                    mouth = ''
+
                 if 'img_brows' in big_dict:
                     brows = big_dict['img_brows']
+                else:
+                    brows = ''
+
                 if 'pupils' in big_dict:
                     pupils = big_dict['pupils']
+                else:
+                    pupils = 100
+
                 timer_to_images.put([brows[0], mouth[0], int(pupils[0])])
                 if 'command_eye' in big_dict:
-                    command_eye = big_dict['command_eye']
+                    time_dict_command_eye = big_dict['command_eye']
+                    print(time_dict_command_eye)
+
 
 
                 if 'command_motor' in big_dict:
-                    time_dict = big_dict['command_motor']
-                    print(time_dict)
+                    time_dict_motors = big_dict['command_motor']
+                    print(time_dict_motors)
                     global datauy
-                    datauy = time_dict[-2]
+                    datauy = time_dict_motors[-2]
                     anglea = multiread([1, 2, 3, 4, 5, 6])
                     for z in range(len(datauy[0])):
                         datauy[2][z] = datauy[1][z]/1024*300
                     robotControl(datauy[0], datauy[2], datauy[1], anglea)
                     for i in range(len(datauy[0])):
                         anglea[datauy[0][i]] = datauy[1][i]
-            threading.Timer(0.04, timer1, args=(time_dict,)).start()
+            threading.Timer(0.04, timer1, args=(time_dict_motors,)).start()
         else:
             d = work()
             if d > max_time_val:
                 max_time_val = 0
                 time_iter = -40
-                time_dict = None
+                time_dict_motors, time_dict_command_eye = None, None
                 event.set()
-            threading.Timer(0.04, timer1, args=(time_dict,)).start()
-            if time_dict != None:
-                if time_dict.get(d, -666) != -666:
-                    datauy = time_dict[d]
+            threading.Timer(0.04, timer1, args=(time_dict_motors,)).start()
+            if time_dict_motors != None:
+                if time_dict_motors.get(d, -666) != -666:
+                    datauy = time_dict_motors[d]
                     for y in datauy[2]:
                         if y + d > max_time_val:
                             max_time_val = y + d
@@ -77,3 +88,6 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
                     for i in range(len(datauy[0])):
                         anglea[datauy[0][i]] = datauy[1][i]
     timer1(None)
+
+
+

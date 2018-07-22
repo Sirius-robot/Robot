@@ -24,7 +24,7 @@ class Feature:
         self.image = pygame.transform.scale(self.image, (int(self.init_bounds.w * 0.01 * percents),
                                                                int(self.init_bounds.h * 0.01 * percents)))
 
-        pygame.time.wait(1000)
+        pygame.time.wait(10)
         #self.bounds.x += self.bounds.w * (self.percents2 - percents) / 100 / 2
         #self.bounds.y += self.bounds.h * (self.percents2 - percents) / 100 / 2
         self.percents2 = percents

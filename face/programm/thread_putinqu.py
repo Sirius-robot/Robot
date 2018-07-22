@@ -20,4 +20,4 @@ def  putinqu(que, que_pup, waitEvent):
         if len(events_pupils):
             ev_put_pup = events_pupils.pop(0)
             que_pup.put(ev_put_pup, block=False)
-        time.sleep(10)
+        time.sleep(5)

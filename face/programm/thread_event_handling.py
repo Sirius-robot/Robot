@@ -27,7 +27,6 @@ def set_monitors():
 
 def main_pygame(que, que_pup, waitEvent):
     global bg, pupil, mask, eyebrows, mouth
-    background_cl = (255,255,255)
     pygame.init()
     surface = set_monitors()
 
