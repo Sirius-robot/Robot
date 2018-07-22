@@ -35,7 +35,7 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end):
         global time_dict_motors
         global command_eye
         threading.Timer(0.04, timer1).start()
-        if time_dict_motors == None and command_eye==None:
+        if time_dict_motors == None and command_eye == None:
             if not chbh_to_timer.empty():
                 eventio.clear()
                 big_dict = chbh_to_timer.get()
