@@ -42,6 +42,8 @@ def choose_behavior(chbh_to_timer,event):
                             dif_times.append(command[2])
                             time_dict[timew] = [ids, angles, dif_times]  
                     big_dict['command_motor'] = time_dict
+                else:
+                    print('No such gesture!')   
             eye_data = db.eyes(gestur[0]) 
             if len(eye_data):
                 time_pointz=[]

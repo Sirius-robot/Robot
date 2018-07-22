@@ -23,13 +23,15 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
     multiInt((1, 2, 3, 4, 5, 6))
     def work():
         global time_iter
-        time_iter += 10
+        time_iter += 40
         return time_iter
-    def timer1(time_dict):
+    def timer1():
+        threading.Timer(0.04, timer1).start()
         global time_iter
         global max_time_val
         global anglea
         global datauy
+        global time_dict
         if time_dict == None:
             if not chbh_to_timer.empty():
                 big_dict = chbh_to_timer.get()
@@ -43,10 +45,10 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
                 if 'command_eye' in big_dict:
                     command_eye = big_dict['command_eye']
 
-
+                print('start')
                 if 'command_motor' in big_dict:
                     time_dict = big_dict['command_motor']
-                    print(time_dict)
+                    print("time_dict")
                     global datauy
                     datauy = time_dict[-2]
                     anglea = multiread([1, 2, 3, 4, 5, 6])
@@ -55,7 +57,6 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
                     robotControl(datauy[0], datauy[2], datauy[1], anglea)
                     for i in range(len(datauy[0])):
                         anglea[datauy[0][i]] = datauy[1][i]
-            threading.Timer(0.04, timer1, args=(time_dict,)).start()
         else:
             d = work()
             if d > max_time_val:
@@ -63,17 +64,20 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
                 time_iter = -40
                 time_dict = None
                 event.set()
-            threading.Timer(0.04, timer1, args=(time_dict,)).start()
+            
             if time_dict != None:
                 if time_dict.get(d, -666) != -666:
+
                     datauy = time_dict[d]
                     for y in datauy[2]:
                         if y + d > max_time_val:
                             max_time_val = y + d
                     print(datauy[0])
-                    print(datauy[1])
                     print(datauy[2])
                     robotControl(datauy[0], datauy[2], datauy[1], anglea)
+                    print('Sent')
                     for i in range(len(datauy[0])):
                         anglea[datauy[0][i]] = datauy[1][i]
-    timer1(None)
+    global time_dict
+    time_dict = None
+    timer1()
