@@ -4,12 +4,12 @@ from threading import Thread
 from pygame.locals import *
 def  putinqu(que, que_pup, waitEvent):
     events = [["../images/eyebrows_anger.png", "../images/mouths/mouth_anger.png", 100],
-              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 100],
+              ["../images/eyebrows.png", "../images/mouths/mouth_boredom.png", 50],
               ["../images/eyebrows_embarrassment.png", "../images/mouths/mouth_embarrassment.png", 100],
               ["", "../images/mouths/mouth_anger.png", 100],
               []]
               #["", "../images/mouths/mouth_embarrassment.png", 100]]
-    events_pupils = [[50,50, 400],[20, -50, 400],[-50,30,400]]
+    events_pupils = [[50,50, 400],[20, -50, 400],[-700,30,400]]
     print("Start")
     while waitEvent:
         #print("poping in queue")

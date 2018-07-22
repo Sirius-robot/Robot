@@ -58,7 +58,7 @@ def main_pygame(que, que_pup, waitEvent):
             else:
                 normal_face(face.eyebrows, face.mouth, face.l_pupil, face.r_pupil)
 
-        if not que_pup.empty():
+        if not que_pup.empty():                                              
             ev_get_pup = que_pup.get()   #[10000, 50, 50]
             time, target_x, target_y = ev_get_pup[2], ev_get_pup[0], -ev_get_pup[1]
             if time < 20:
@@ -66,8 +66,14 @@ def main_pygame(que, que_pup, waitEvent):
 
             speed_x = (target_x - (face.l_pupil.bounds.x - face.l_pupil.init_bounds.x)) / (
                     time * FPS / 1000)
+            if speed_x > target_x:
+                speed_x = speed_x - target_x
+
+
             speed_y = (target_y - (face.l_pupil.bounds.y - face.l_pupil.init_bounds.y)) / (
                     time * FPS / 1000)
+            if speed_y > target_y:
+                speed_y = speed_y - target_y
 
             dif_speed_x = 0
             dif_speed_y = 0
