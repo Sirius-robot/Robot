@@ -85,9 +85,8 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end):
                 eventio.set()
             if  not command_eye == None:
                 if command_eye.get(d, -666) != -666:
-                     timer_to_eyepos.put(command_eye[d])
-                     print(command_eye[d])
-                     if command_eye[d][-1] + d > max_time_val:
+                    timer_to_eyepos.put(command_eye[d])
+                    if command_eye[d][-1] + d > max_time_val:
                         max_time_val = command_eye[d][-1] + d
             if time_dict_motors != None:
                 if time_dict_motors.get(d, -666) != -666:
@@ -95,9 +94,6 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end):
                     for y in datauy[2]:
                         if y + d > max_time_val:
                             max_time_val = y + d
-                    print(datauy[0])
-                    print(datauy[1])
-                    print(datauy[2])
                     robotControl(datauy[0], datauy[2], datauy[1], anglea)
                     for i in range(len(datauy[0])):
                         anglea[datauy[0][i]] = datauy[1][i]

@@ -1,5 +1,6 @@
 import pygame
 from pygame.rect import Rect
+
 class Feature:
     def __init__(self, x, y, w, h, image):
         self.init_x = x
