@@ -17,8 +17,8 @@ def choose_behavior(chbh_to_timer,eventio,bh_end):
     db = database()
     big_dict = {}
     while 1:
-        bml = input('write bml name ')
-        f = open(os.path.join('Bml', bml+".bml"), 'r')
+        #bml = input('write bml name ')
+        f = open(os.path.join('Bml', "Bye.bml"), 'r')
         z = f.read()
         x = dictionary_result(z)
         gestur = x['figure'] 	
