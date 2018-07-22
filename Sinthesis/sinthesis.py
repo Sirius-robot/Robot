@@ -1,7 +1,7 @@
 import requests
 import configparser
 
-import winsound
+#import winsound
 config = configparser.ConfigParser()
 config.read("settings.ini")
 key = config.get("Settings", "API_KEY")

@@ -1,7 +1,7 @@
 <bml>
     <figure name="agree1"/>
-    <mouth img="mouth.png"/>
-    <brows img="eyebrows.png"/>
-    <speech></speech>
+    <mouth img="mouth.img"/>
+    <brows img="eyebrows.img"/>
+    <speech>@@@@@@@@@@@@@@@@@@@@@@@@@</speech>
     <pupils percent="100"/>
 </bml>

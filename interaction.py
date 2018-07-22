@@ -5,8 +5,8 @@ import queue
 sys.path.insert(0, 'Dynamixel')
 import choose_behavior
 import Timer
-sys.path.insert(0, 'face/programm')
-import thread_event_handling
+#sys.path.insert(0, 'face/programm')
+#import thread_event_handling
 sys.path.insert(1, 'Alisnky')
 from DataBase import *
 sys.path.insert(2, 'recognition')
@@ -27,8 +27,8 @@ def m1():
 def s1():
     Timer.timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end)
 
-pygame_thread_mypygame = Thread(target=thread_event_handling.main_pygame, args=(timer_to_images, timer_to_eyepos, waitEvent))
-pygame_thread_mypygame.start()
+#pygame_thread_mypygame = Thread(target=thread_event_handling.main_pygame, args=(timer_to_images, timer_to_eyepos, waitEvent))
+#pygame_thread_mypygame.start()
 
 eventio = threading.Event()
 event = threading.Event()
