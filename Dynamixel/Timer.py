@@ -1,3 +1,4 @@
+
 import threading
 import sys
 import time
@@ -19,11 +20,11 @@ max_time_val = 0
 time_iter = -40
 lenni = 0
 
-def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
+def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,eventio,bh_end):
     multiInt((1, 2, 3, 4, 5, 6))
     def work():
         global time_iter
-        time_iter += 10
+        time_iter += 40
         return time_iter
     def timer1(time_dict_motors, time_dict_command_eye):
         global time_iter
@@ -32,6 +33,7 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
         global datauy
         if time_dict_motors == None and time_dict_command_eye==None:
             if not chbh_to_timer.empty():
+                eventio.clear()
                 big_dict = chbh_to_timer.get()
                 if 'img_mouth' in big_dict:
                     mouth = big_dict['img_mouth']
@@ -54,7 +56,6 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
                     print(time_dict_command_eye)
 
 
-
                 if 'command_motor' in big_dict:
                     time_dict_motors = big_dict['command_motor']
                     print(time_dict_motors)
@@ -69,15 +70,19 @@ def timer(chbh_to_timer,timer_to_images,timer_to_eyepos,event):
             threading.Timer(0.04, timer1, args=(time_dict_motors,)).start()
         else:
             d = work()
+
             if d > max_time_val:
                 max_time_val = 0
                 time_iter = -40
+
                 time_dict_motors, time_dict_command_eye = None, None
-                event.set()
+                bh_end.put("The END!")
+                eventio.set()
             threading.Timer(0.04, timer1, args=(time_dict_motors,)).start()
             if time_dict_motors != None:
                 if time_dict_motors.get(d, -666) != -666:
                     datauy = time_dict_motors[d]
+
                     for y in datauy[2]:
                         if y + d > max_time_val:
                             max_time_val = y + d
