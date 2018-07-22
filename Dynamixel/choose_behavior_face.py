@@ -1,5 +1,3 @@
-
-
 import servocontrol
 import threading
 import sys
@@ -14,8 +12,8 @@ sys.path.insert(2, 'recognition')
 from parsing_bml import *
 def choose_bmlz():
     try:
-        bml = input('write bml name ')
-        f = open(os.path.join('Bml', bml+".bml"), 'r')
+        #bml = input('write bml name ')
+        f = open(os.path.join('Bml', "Bye.bml"), 'r')
         return(f)
     except FileNotFoundError:
         print("Bml doesn't exist")

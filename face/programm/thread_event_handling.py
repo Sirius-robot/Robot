@@ -52,9 +52,9 @@ def main_pygame(que, que_pup, waitEvent):
                     face.eyebrows.image = pygame.image.load("face/images/" + ev_get[0])
                 if len(ev_get[1]):
                     face.mouth.image = pygame.image.load("face/images/" +ev_get[1])
-                if ev_get[2] != 100:
-                    face.l_pupil.scale(ev_get[2], pupil)
-                    face.r_pupil.scale(ev_get[2], pupil)
+                #if ev_get[2] != 100:
+                #    face.l_pupil.scale(ev_get[2], pupil)
+                #    face.r_pupil.scale(ev_get[2], pupil)
             else:
                 normal_face(face.eyebrows, face.mouth, face.l_pupil, face.r_pupil)
 

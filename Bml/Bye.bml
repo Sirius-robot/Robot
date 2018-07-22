@@ -3,5 +3,5 @@
     <mouth img="mouth.png"/>
     <brows img="eyebrows.png"/>
     <speech></speech>
-    <pupils percent="100"/>
+    <pupils percent="30"/>
 </bml>

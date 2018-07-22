@@ -9,7 +9,7 @@ def  putinqu(que, que_pup, waitEvent):
               ["", "../images/mouths/mouth_anger.png", 100],
               []]
               #["", "../images/mouths/mouth_embarrassment.png", 100]]
-    events_pupils = [[50,50, 400],[20, -50, 40],[-50,30, 40]]
+    events_pupils = [[50,50, 400],[20, -50, 400],[-50,30,400]]
     print("Start")
     while waitEvent:
         #print("poping in queue")
