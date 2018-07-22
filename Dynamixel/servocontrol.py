@@ -19,6 +19,7 @@ def robotControl(ID, TimeR, Dego,pos):
     dgs  = []
     dgd  = []
     Deg  = []
+
     for i in range(len(TimeR)):
         if TimeR[i] == 0: TimeR[i] = 1  
 
