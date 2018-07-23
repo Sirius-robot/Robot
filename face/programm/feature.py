@@ -24,7 +24,7 @@ class Feature:
         new_y = y #+ self.bounds.h * (100 - self.percents) / 100 / 2
         # print("end x =", new_x)
         # print("end y =", new_y)
-        self.bounds = self.bounds.move(new_x, new_y)
+        self.bounds = self.bounds.move(new_x, new_y)  #двигает прямоуголник в новые координаты
 
     def scale(self, percents, image):
 

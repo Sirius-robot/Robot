@@ -61,6 +61,7 @@ def main_pygame(que, que_pup, waitEvent):
         if not que_pup.empty():                                              
             ev_get_pup = que_pup.get()   #[10000, 50, 50]
             time, target_x, target_y = ev_get_pup[2], ev_get_pup[0], -ev_get_pup[1]
+
             if time < 20:
                 time = 20
 
