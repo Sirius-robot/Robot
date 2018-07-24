@@ -1,0 +1,7 @@
+<bml>
+    <figure name="anger1"/>
+    <mouth img="rot anger"/>
+    <brows img="brows anger"/>
+    <speech></speech> 
+    <pupils percent="80"/>
+</bml>

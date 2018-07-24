@@ -1,7 +1,7 @@
 <bml>
-    <figure name="amaze5"/>
+    <figure name="amaze2"/>
     <mouth img="rot"/>
-    <brows img="brows nedoumenie"/>
+    <brows img="brows surprise"/>
     <speech></speech>
     <pupils percent="120"/>
 </bml>

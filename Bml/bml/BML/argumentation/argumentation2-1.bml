@@ -1,0 +1,7 @@
+<bml>
+    <figure name="argumentation2"/>
+    <mouth img="rot"/>
+    <brows img="brows confusion"/>
+    <speech></speech>
+    <pupils percent="100"/>
+</bml>

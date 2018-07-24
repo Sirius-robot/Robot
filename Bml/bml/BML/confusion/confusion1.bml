@@ -1,0 +1,7 @@
+<bml>
+    <figure name="confusion1"/>
+    <mouth img="rot confusion"/>
+    <brows img="brows confusion"/>
+    <speech></speech>
+    <pupils percent="100"/>
+</bml>
