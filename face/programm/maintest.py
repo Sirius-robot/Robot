@@ -1,10 +1,10 @@
-from queue import Queue
 import queue, pygame, win32api, win32gui, win32con, time
 import thread_putinqu, thread_event_handling
-from threading import Thread, Event
+#from threading import Thread, Event
 from pygame.locals import *
 from feature import Feature
 from face import Face
+from multiprocessing import Process, Queue, Event, freeze_support
 
 waitEvent = Event()
 waitEvent.set()     #waitEvent.isSet() return True
@@ -19,20 +19,16 @@ que = Queue()       #   queue for images. На вход подается спи�
 que_pup = Queue()   #    список из конечных координат и времени за которое надо прийти в точку.
 
 
-try:
-    pygame_thread_mypygame = Thread(target=thread_event_handling.main_pygame, args=(que, que_pup, waitEvent))
-    pygame_thread_mypygame.daemon = True
-    pygame_thread_mypygame.start()
+if __name__ == '__main__':
 
-    pygame_thread_putinqu = Thread(target=thread_putinqu.putinqu, args=(que, que_pup, waitEvent))
-    pygame_thread_putinqu.daemon = True
-    pygame_thread_putinqu.start()
-    while True:
-        time.sleep(100)
+        freeze_support()
+        pygame_thread_mypygame = Process(target=thread_event_handling.main_pygame, args=(que, que_pup, waitEvent,))
+
+        pygame_thread_mypygame.start()
 
 
-except (KeyboardInterrupt, SystemExit):
-    print('ok')
-    waitEvent.clear()
-    pygame_thread_putinqu.join()
-    pygame_thread_mypygame.join()
+
+        pygame_thread_putinqu =Process(target=thread_putinqu.putinqu, args=(que, que_pup, waitEvent,))
+        pygame_thread_putinqu.start()
+        pygame_thread_mypygame.join()
+        pygame_thread_putinqu.join()
