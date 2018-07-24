@@ -8,3 +8,5 @@ venv/
 *.xml
 *.idea/
 Alisnky/database.db
+
+credential\.json

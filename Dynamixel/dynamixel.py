@@ -48,22 +48,18 @@ def init(ID):
 def multiMove(ID,pos,speed):
     groupSyncPos = GroupSyncWrite(portHandler, packetHandler, ADDR_MX_GOAL_POSITION, LEN_MX_GOAL_POSITION)
     groupSyncSpeed = GroupSyncWrite(portHandler, packetHandler,ADDR_MX_GOAL_SPEED, LEN_MX_GOAL_SPEED)
-    IDO = 0
-    IDQ = 1
-    for x in ID:
-        param_goal_speed = [DXL_LOBYTE(speed[IDO]), DXL_HIBYTE(speed[IDO])]
-        param_goal_position = [DXL_LOBYTE(pos[IDO]), DXL_HIBYTE(pos[IDO])]
-        dxl_addparam_result = groupSyncSpeed.addParam(ID[IDO], param_goal_speed)
-        dxl_addparam_result = groupSyncPos.addParam(ID[IDO], param_goal_position)
-        IDO = IDO + 1
-        IDQ = IDQ + 1
+    for x in range(len(ID)):
+        param_goal_speed = [DXL_LOBYTE(speed[x]), DXL_HIBYTE(speed[x])]
+        param_goal_position = [DXL_LOBYTE(pos[x]), DXL_HIBYTE(pos[x])]
+        dxl_addparam_result = groupSyncSpeed.addParam(ID[x], param_goal_speed)
+        dxl_addparam_result = groupSyncPos.addParam(ID[x], param_goal_position)
     groupSyncSpeed.txPacket()
     groupSyncPos.txPacket()
     dxl_comm_result = groupSyncSpeed.txPacket()
     dxl_comm_result = groupSyncPos.txPacket()
     if dxl_comm_result != COMM_SUCCESS:
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))
-         raise Exception("Something went wrong")
+         raise Exception("Something went wrong1")
 
 def stop(ID):
     dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(portHandler, ID, ADDR_MX_TORQUE_ENABLE, TORQUE_DISABLE)
@@ -76,7 +72,6 @@ def stop(ID):
     portHandler.closePort()
 
 def read(ID):
-
     dxl_present_position, dxl_comm_result, dxl_error = packetHandler.read2ByteTxRx(portHandler, ID, 36)
     if dxl_comm_result != COMM_SUCCESS:
          print("%s" % packetHandler.getTxRxResult(dxl_comm_result))

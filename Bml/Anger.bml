@@ -1,7 +1,0 @@
-<bml>
-    <figure name="anger1"/>
-    <mouth img="img"/>
-    <brows img="img"/>
-    <speech></speech>
-    <pupils percent="100"/>
-</bml>

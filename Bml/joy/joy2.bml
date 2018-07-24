@@ -1,0 +1,7 @@
+<bml>
+    <figure name="joy2"/>
+    <mouth img="rot joy"/>
+    <brows img="brows"/>
+    <speech></speech>
+    <pupils percent="120"/>
+</bml>

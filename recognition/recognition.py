@@ -5,7 +5,7 @@ from lxml import etree
 import configparser
 
 config = configparser.ConfigParser()
-config.read("../settings.ini")
+config.read("settings.ini")
 key = config.get("Settings", "API_KEY")
 
 if key == 'sample_key':

@@ -1,0 +1,7 @@
+<bml>
+    <figure name="excuse1"/>
+    <mouth img="rot"/>
+    <brows img="brows"/>
+    <speech></speech>
+    <pupils percent="100"/>
+</bml>

@@ -1,0 +1,7 @@
+<bml>
+    <figure name="inactivity16"/>
+    <mouth img="rot"/>
+    <brows img="brows"/>
+     <pupils percent="100"/>
+    <speech></speech>
+</bml>
